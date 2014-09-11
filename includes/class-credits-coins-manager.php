@@ -49,6 +49,14 @@ class Credits_Coins_Manager {
     protected $version;
 
     /**
+     * Store the options set for the plugin (if there are) to be used as context in the admin e public side.
+     *
+     * @access protected
+     * @var string $options The current options set for the plugin.
+     */
+    protected $options;
+
+    /**
      * Instantiates the plugin by setting up the core properties and loading
      * all necessary dependencies and defining the hooks.
      *
@@ -62,6 +70,7 @@ class Credits_Coins_Manager {
 
         $this->plugin_slug = 'credits-coins';
         $this->version = '1.0.0';
+        $this->options = get_option( 'credits-coins-options' );
 
         $this->load_dependencies();
         $this->define_admin_hooks();
@@ -87,6 +96,7 @@ class Credits_Coins_Manager {
      * @access private
      */
     private function load_dependencies() {
+        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-credits-coins-model.php';
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-credits-coins-manager-admin.php';
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-credits-coins-manager-options.php';
         require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-credits-coins-manager-public.php';
@@ -104,19 +114,27 @@ class Credits_Coins_Manager {
      */
     private function define_admin_hooks() {
 
-        /*
-        $admin = new Secure_Attachments_Manager_Admin( $this->version );
-        $this->loader->add_action( 'admin_init', $admin, 'register_scripts' );
-        $this->loader->add_action( 'admin_init', $admin, 'register_styles' );
-        $this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_scripts' );
-        $this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_styles' );
-        $this->loader->add_action( 'admin_menu', $admin, 'add_plugin_options_page' );
-        $this->loader->add_action( 'admin_init', $admin, 'options_page_init' );
-        $this->loader->add_action( 'wp_ajax_saud', $admin, 'secure_attachments_ajax_upload_document' );
-        $this->loader->add_action( 'wp_ajax_sard', $admin, 'secure_attachments_ajax_remove_document' );
-        $this->loader->add_action( 'wp_ajax_samd', $admin, 'secure_attachments_ajax_modify_document' );
-        $this->loader->add_action( 'wp_ajax_sald', $admin, 'secure_attachments_ajax_loading_document' );
+        $admin = new Credits_Coins_Manager_Admin( $this->version, $this->options, Credits_Coins_Model::getInstance());
+        $admin_options = new Credits_Coins_Manager_Options( $this->version, $this->options );
+        $this->loader->add_action( 'admin_menu', $admin_options, 'add_plugin_options_page' );
+        $this->loader->add_action( 'admin_init', $admin_options, 'options_page_init' );
+        $this->loader->add_action( 'admin_init', $admin_options, 'register_scripts' );
+        $this->loader->add_action( 'admin_enqueue_scripts', $admin_options, 'enqueue_scripts' );
 
+        $this->loader->add_action( 'admin_init', $admin, 'register_scripts' );
+        $this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_scripts' );
+        $this->loader->add_action( 'user_register', $admin, 'set_default_credits_after_registration' );
+        $this->loader->add_action( 'wpmu_new_user', $admin, 'set_default_credits_after_registration' );
+        $this->loader->add_filter( 'manage_users_columns', $admin, 'modify_admin_users_columns' );
+        $this->loader->add_filter( 'manage_users_custom_column', $admin, 'modify_admin_user_columns_content', 10, 3 );
+        $this->loader->add_action( 'show_user_profile', $admin, 'show_extra_profile_fields' );
+        $this->loader->add_action( 'edit_user_profile', $admin, 'show_extra_profile_fields' );
+        $this->loader->add_action( 'personal_options_update', $admin, 'save_extra_profile_fields' );
+        $this->loader->add_action( 'edit_user_profile_update', $admin, 'save_extra_profile_fields' );
+        $this->loader->add_action( 'wp_ajax_user_credits_movements', $admin, 'get_json_user_credits_movements' );
+
+
+        /*
         global $pagenow;
         if( 'post.php' == $pagenow) {
             $this->loader->add_action( 'add_meta_boxes_post', $admin, 'add_meta_box_post' );
