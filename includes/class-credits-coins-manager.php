@@ -132,7 +132,7 @@ class Credits_Coins_Manager {
         $this->loader->add_action( 'personal_options_update', $admin, 'save_extra_profile_fields' );
         $this->loader->add_action( 'edit_user_profile_update', $admin, 'save_extra_profile_fields' );
         $this->loader->add_action( 'wp_ajax_user_credits_movements', $admin, 'get_json_user_credits_movements' );
-
+        $this->loader->add_action( 'add_meta_boxes', $admin, 'add_meta_box_credits_coins' );
 
         /*
         global $pagenow;

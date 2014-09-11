@@ -121,6 +121,48 @@ class Credits_Coins_Manager_Admin {
     }
 
     /*
+    function is_credits_coins_metabox_enabled( $hook ) {
+        global $post_type;
+        $needle = $post_type.',';
+        if ( is_admin()
+            && ( 'post.php' == $hook || 'post-new.php' == $hook )
+            && strpos( $this->options['post-types-values'], $needle )
+        ) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+*/
+
+    function add_meta_box_credits_coins() {
+
+        global $post_type;
+
+        $needle = $post_type.',';
+
+        if( strpos( $this->options['post-types-values'], $needle ) !== false
+            && strpos( $this->options['post-types-values'], $needle ) !== -1 ) {
+            add_meta_box(
+                'creditd_coins',
+                __("Credits", 'credits-coins'),
+                array($this, 'render_meta_box_credits_coins'),
+                $post_type
+            );
+        }
+
+    }
+
+    function render_meta_box_credits_coins( $post ) {
+        $current_credit_value = 0;
+        ?>
+        <input type="number" id="post-type-value" name="post-type-value" size="4" value="<?php echo $current_credit_value; ?>" />
+        <p><?php _e( 'Assign a value in Credits for this resource', 'credits-coins' ); ?></p>
+
+    <?php
+    }
+
+    /*
      * CREATE TABLE IF NOT EXISTS `wp_credits_coins_movements` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
   `maker_user_id` bigint(20) NOT NULL,
