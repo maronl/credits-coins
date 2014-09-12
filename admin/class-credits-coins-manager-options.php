@@ -153,7 +153,7 @@ class Credits_Coins_Manager_Options {
 
     public function credits_by_group_values_callback() {
 
-        $value = ( isset( $this->options['credits-by-group-values'] ) ) ? $this->options['credits-by-group-values'] : '';
+        $value = ( isset( $this->options['credits-by-group-values'] ) ) ? $this->option_array_to_string( $this->options['credits-by-group-values'] ) : '';
 
         $description = '<p class="description">' . __('Define how users can buy credits other than singly', 'credits-coins') . '</p>';
 
@@ -162,22 +162,16 @@ class Credits_Coins_Manager_Options {
             $value
         );
 
-        $options_saved = array();
-
-        if( isset( $this->options['credits-by-group-values'] ) && ! empty( $this->options['credits-by-group-values'] )) {
-            $options_saved = explode( ';', $this->options['credits-by-group-values'] );
-        }
-
         echo '<ul class="credits-by-group-list">';
 
-        $hide_message = ( count($options_saved) ) ? 'class="hidden"' : '';
+        $hide_message = ( count( $this->options['credits-by-group-values'] ) ) ? 'class="hidden"' : '';
 
         echo '<li id="no-credits-by-group-values-message" ' . $hide_message . '>' . __( 'Up to know is not not defined any group of credits ', 'credits-coin' ) . '</li>';
 
-        if( count($options_saved) ) {
-            foreach( $options_saved as $option_saved ) {
-                $option_saved = explode( ',', $option_saved );
-                echo '<li class="credits-by-group-item" data-value="' . $option_saved[0] . ',' . $option_saved[1] . '">' . $option_saved[0] . ' ' . __( 'Credits', 'credits-coins' ) .  ' => ' . $option_saved[1] . ' ' . __( 'Euro', 'credits-coins' ) . ' - <a class="remove-credits-by-group-value" href="#' . $option_saved[0] . ',' . $option_saved[1] . '">remove</a></li>';
+        if( count( $this->options['credits-by-group-values'] ) ) {
+            foreach( $this->options['credits-by-group-values'] as $key => $value ) {
+                //$option_saved = explode( ',', $option_saved );
+                echo '<li class="credits-by-group-item" data-value="' . $key . ',' . $value . '">' . $key . ' ' . __( 'Credits', 'credits-coins' ) .  ' => ' . $value . ' ' . __( 'Euro', 'credits-coins' ) . ' - <a class="remove-credits-by-group-value" href="#' . $key . ',' . $value . '">remove</a></li>';
             }
         }
 
@@ -197,7 +191,7 @@ class Credits_Coins_Manager_Options {
 
         $post_types = $this->get_linking_post_types();
 
-        $value = ( isset( $this->options['post-types-values'] ) ) ? $this->options['post-types-values'] : '';
+        $value = ( isset( $this->options['post-types-values'] ) ) ? $this->option_array_to_string( $this->options['post-types-values'] ) : '';
 
         $description = '<p class="description">' . __('Define which post types can be priced with credits', 'credits-coins') . '</p>';
 
@@ -206,25 +200,15 @@ class Credits_Coins_Manager_Options {
             $value
         );
 
-        $options_saved = array();
-
-        if( isset( $this->options['post-types-values'] ) && ! empty( $this->options['post-types-values'] )) {
-            $options_saved = explode( ';', $this->options['post-types-values'] );
-        }
-
-        $option_saved_post_types = array();
-
         echo '<ul class="post-types-values-list">';
 
-        $hide_message = ( count($options_saved) ) ? 'class="hidden"' : '';
+        $hide_message = ( count( $this->options['post-types-values'] ) ) ? 'class="hidden"' : '';
 
         echo '<li id="no-post-types-values-message" ' . $hide_message . '>' . __( 'No post type has been set to be valued with credits', 'credits-coin' ) . '</li>';
 
-        if( count($options_saved) ) {
-            foreach( $options_saved as $option_saved ) {
-                $option_saved = explode( ',', $option_saved );
-                echo '<li class="post-types-values-item" data-value="' . $option_saved[0] . ',' . $option_saved[1] . '">' . $option_saved[0] . ' => ' . $option_saved[1] . ' ' . __( 'Credits', 'credits-coins' ) . ' - <a class="remove-post-type-value" href="#' . $option_saved[0] . ',' . $option_saved[1] . '">remove</a></li>';
-                $option_saved_post_types[] = $option_saved[0];
+        if( count( $this->options['post-types-values'] ) ) {
+            foreach(  $this->options['post-types-values']  as $key => $value ) {
+                echo '<li class="post-types-values-item" data-value="' . $key . ',' . $value . '">' . $key . ' => ' . $value . ' ' . __( 'Credits', 'credits-coins' ) . ' - <a class="remove-post-type-value" href="#' . $key . ',' . $value . '">remove</a></li>';
             }
         }
 
@@ -236,7 +220,7 @@ class Credits_Coins_Manager_Options {
 
         foreach( $post_types as $value ){
             $disabled = '';
-            if( in_array( $value, $option_saved_post_types ) ) {
+            if( isset( $this->options['post-types-values'][$value] ) ) {
                 $disabled = 'disabled';
             }
             $format = '<option value="%s" %s>%s</option>';
@@ -268,6 +252,27 @@ class Credits_Coins_Manager_Options {
 
     function get_currencies() {
         return array( 'Eur' => __( 'Euro', 'credits-coins' ), 'USDollar' => __( 'US Dollar', 'credits-coins' ) );
+    }
+
+    /*
+         * this function is ugly. now it is here
+         * if you want if you need of you can please refactor it :)
+         * it assume to parse a string like post,10;page,20 and produce
+         * array{
+         *  post => 10
+         *  page => 20
+         * }
+         */
+    private function option_array_to_string( $options = array() ) {
+        $res = '';
+        if( empty($options) ){
+            return $res;
+        }
+        foreach ( $options as $key => $value ){
+            if( ! empty( $res ) ) $res .= ';';
+            $res .= $key.','.$value;
+        }
+        return $res;
     }
 
 }

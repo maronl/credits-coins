@@ -67,10 +67,6 @@ class Credits_Coins_Manager_Admin {
 
     function save_extra_profile_fields($user_id) {
 
-        global $wpdb;
-
-        $table_name = $wpdb->prefix . "credits_coins_movements";
-
         if ( ! current_user_can('edit_user', $user_id) )
             return false;
 
@@ -120,48 +116,57 @@ class Credits_Coins_Manager_Admin {
 
     }
 
-    /*
-    function is_credits_coins_metabox_enabled( $hook ) {
-        global $post_type;
-        $needle = $post_type.',';
-        if ( is_admin()
-            && ( 'post.php' == $hook || 'post-new.php' == $hook )
-            && strpos( $this->options['post-types-values'], $needle )
-        ) {
+
+    function is_credits_coins_metabox_enabled( $post_type ) {
+        if ( isset($this->options['post-types-values'][$post_type]) ){
             return true;
-        } else {
+        }else{
             return false;
         }
     }
-*/
+
 
     function add_meta_box_credits_coins() {
 
         global $post_type;
-
-        $needle = $post_type.',';
-
-        if( strpos( $this->options['post-types-values'], $needle ) !== false
-            && strpos( $this->options['post-types-values'], $needle ) !== -1 ) {
+        if( $this->is_credits_coins_metabox_enabled( $post_type ) ) {
             add_meta_box(
                 'creditd_coins',
                 __("Credits", 'credits-coins'),
                 array($this, 'render_meta_box_credits_coins'),
-                $post_type
+                $post_type, 'side'
             );
         }
 
     }
 
     function render_meta_box_credits_coins( $post ) {
-        $current_credit_value = 0;
+        global $pagenow; //post-new.php
+        $current_credit_value = $this->data_model->get_post_credits( $post->ID );
+        if( empty($current_credit_value) && $pagenow !== 'post-new.php' ) {
+            $current_credit_value = 0;
+        }elseif( empty($current_credit_value) && $pagenow === 'post-new.php' ) {
+            $current_credit_value = $this->options['post-types-values'][$post->post_type];
+        }
         ?>
+
         <input type="number" id="post-type-value" name="post-type-value" size="4" value="<?php echo $current_credit_value; ?>" />
         <p><?php _e( 'Assign a value in Credits for this resource', 'credits-coins' ); ?></p>
 
     <?php
     }
 
+    function save_meta_box_credits_coin($post_id) {
+
+        $new_value = 0;
+
+        if( isset( $_POST['post-type-value'] ) && is_numeric( $_POST['post-type-value'] ) && $_POST['post-type-value'] > 0 ){
+            $new_value = $_POST['post-type-value'];
+        }
+
+        $this->data_model->set_post_credits( $post_id, $new_value );
+
+    }
     /*
      * CREATE TABLE IF NOT EXISTS `wp_credits_coins_movements` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,

@@ -24,6 +24,18 @@ class Credits_Coins_Model {
        return get_user_meta( $user_id, 'credits-coins-user-credits', true );
     }
 
+    public function set_post_credits ( $post_id = null, $value = null ) {
+        if( is_null( $post_id ) || is_null( $value ) ) {
+            return false;
+        }
+
+        return update_post_meta( $post_id, 'credits-coins-post-value', $value );
+    }
+
+    public function get_post_credits ( $post_id ) {
+        return get_post_meta( $post_id, 'credits-coins-post-value', true );
+    }
+
     public function register_credits_movement( $args = array() ){
         /*
          * args accepetd are

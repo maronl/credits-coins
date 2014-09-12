@@ -72,6 +72,15 @@ class Credits_Coins_Manager {
         $this->version = '1.0.0';
         $this->options = get_option( 'credits-coins-options' );
 
+        //convert options string in format like post,10;page,20 in array
+        if( isset( $this->options['post-types-values'] ) ) {
+            $this->options['post-types-values'] = $this->option_string_to_array( $this->options['post-types-values'] );
+        }
+
+        if( isset( $this->options['credits-by-group-values'] ) ) {
+            $this->options['credits-by-group-values'] = $this->option_string_to_array( $this->options['credits-by-group-values'] );
+        }
+
         $this->load_dependencies();
         $this->define_admin_hooks();
         $this->define_public_hooks();
@@ -133,14 +142,7 @@ class Credits_Coins_Manager {
         $this->loader->add_action( 'edit_user_profile_update', $admin, 'save_extra_profile_fields' );
         $this->loader->add_action( 'wp_ajax_user_credits_movements', $admin, 'get_json_user_credits_movements' );
         $this->loader->add_action( 'add_meta_boxes', $admin, 'add_meta_box_credits_coins' );
-
-        /*
-        global $pagenow;
-        if( 'post.php' == $pagenow) {
-            $this->loader->add_action( 'add_meta_boxes_post', $admin, 'add_meta_box_post' );
-            $this->loader->add_action( 'add_meta_boxes_page', $admin, 'add_meta_box_page' );
-        }
-        */
+        $this->loader->add_action( 'save_post', $admin, 'save_meta_box_credits_coin' );
 
     }
 
@@ -177,4 +179,25 @@ class Credits_Coins_Manager {
         return $this->version;
     }
 
+    /*
+     * this function is ugly. now it is here
+     * if you want if you need of you can please refactor it :)
+     * it assume to parse a string like post,10;page,20 and produce
+     * array{
+     *  post => 10
+     *  page => 20
+     * }
+     */
+    private function option_string_to_array( $option = '' ) {
+        $res = array();
+        if( empty($option) ){
+            return $res;
+        }
+        $objects = explode( ';', $option);
+        foreach ( $objects as $object ){
+            $elements = explode( ',', $object );
+            $res[$elements[0]] = $elements[1];
+        }
+        return $res;
+    }
 }
