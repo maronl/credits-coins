@@ -6,9 +6,7 @@ wordpress plugin to enable users with a wallet of credits to be spent on acquiri
 Plugin still Work In Progress
 
 ==Steps to complete version 1.0==
-
-
-- create filter for the_content() to show content only if user bought the post with credits
+- refine filter for the_content with a nice html alert to buy the post
 - implement function for admin to save user credits movements as csv
 - fix js with minify version
 - implement better js validation in the options page
@@ -27,6 +25,8 @@ Plugin still Work In Progress
 - implement DB structure to store resource bought by users ... probably id, user_id, post_id, date, credits
 - implement the functions to check if an user has bought a post
 - implement the functions to store post bought by an user
+
+- create filter for the_content() to show content only if user bought the post with credits
 
 before 12/09/2014
 - not tracked down
