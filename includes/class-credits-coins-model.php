@@ -98,4 +98,54 @@ class Credits_Coins_Model {
         return $latest_movements;
 
     }
+
+    function register_user_purchase( $user_id = null, $post_id = null, $value = null, $purchase_note = '' ) {
+
+        if( ! isset( $user_id ) || is_null( $user_id ) ) {
+            return false;
+        }
+        if( ! isset( $post_id ) || is_null( $post_id ) ) {
+            return false;
+        }
+        if( ! isset( $value ) || is_null( $value ) ) {
+            return false;
+        }
+
+        global $wpdb;
+
+        $table_name = $wpdb->prefix . "credits_coins_purchases";
+
+        $rows_affected = $wpdb->insert( $table_name, array(
+                'user_id' => $user_id,
+                'post_id' => $post_id,
+                'time' => current_time('mysql'),
+                'value' => $value,
+                'note' => $purchase_note)
+        );
+
+        return $rows_affected;
+    }
+
+    function user_can_access_post( $user_id = null, $post_id = null ){
+        global $wpdb;
+        if( is_null( $user_id ) || is_null( $post_id ) ) {
+            return false;
+        }
+        $check = $wpdb->get_row(
+            $wpdb->prepare(
+                "
+                 SELECT * FROM " . $wpdb->prefix . "credits_coins_purchases
+                 WHERE post_id = %d
+                 AND user_id = %d
+                ",
+                $post_id, $user_id
+            )
+        );
+
+        if( is_null( $check ) ){
+            return false;
+        }
+
+        return $check;
+    }
 } 

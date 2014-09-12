@@ -175,8 +175,24 @@ class Credits_Coins_Manager_Admin {
   `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `value` int(11) NOT NULL DEFAULT '0',
   `tools` varchar(10) NOT NULL DEFAULT '',
-  `description` longtext NOT NULL DEFAULT '',
-  UNIQUE KEY `id` (`id`)
+  `description` longtext NOT NULL,
+  UNIQUE KEY `id` (`id`),
+  KEY `maker_user_id` (`maker_user_id`),
+  KEY `destination_user_id` (`destination_user_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+CREATE TABLE IF NOT EXISTS `wp_credits_coins_purchases` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `user_id` bigint(20) NOT NULL,
+  `post_id` bigint(20) NOT NULL,
+  `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `value` int(11) NOT NULL DEFAULT '0',
+  `note` longtext NOT NULL,
+  UNIQUE KEY `id` (`id`),
+  UNIQUE KEY `unique_purchase` (`user_id`,`post_id`),
+  KEY `user_id` (`user_id`),
+  KEY `post_id` (`post_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
      */
 }

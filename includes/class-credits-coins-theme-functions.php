@@ -5,14 +5,20 @@ class Credits_Coins_Theme_Functions {
     function __construct() { }
 
     public static function  define_theme_functions() {
-       /*
-	   if( ! function_exists( 'lps_get_related_posts' ) ) {
-            function lps_get_related_posts( $post ) {
-                $lps_data_model = Linking_Posts_Model::getInstance();
-                return $lps_data_model->get_related_posts( $post );
+
+	   if( ! function_exists( 'cc_user_can_access_post' ) ) {
+            function cc_user_can_access_post( $user_id, $post_id ) {
+                $cc_data_model = Credits_Coins_Model::getInstance();
+                return $cc_data_model->user_can_access_post( $user_id, $post_id );
             }
         }
-		*/
+
+        if( ! function_exists( 'cc_register_user_purchase' ) ) {
+            function cc_register_user_purchase( $user_id, $post_id, $value, $purchase_note = '' ) {
+                $cc_data_model = Credits_Coins_Model::getInstance();
+                return $cc_data_model->register_user_purchase( $user_id, $post_id, $value, $purchase_note );
+            }
+        }
 
     }
 } 
