@@ -121,7 +121,10 @@ class Credits_Coins_Manager_Admin {
         if( isset($_POST['post_id']) ) $post_id =  esc_sql( $_POST['post_id'] );
 
         if( ! is_user_logged_in() || is_null( $post_id ) ) {
-            die('0');
+            die( json_encode( array(
+                'status' => 0,
+                'msg' => __('Ops ... To buy a post before do login. Thanks!', 'credits-coins')
+            ) ) );
         }
 
         check_ajax_referer( 'credits-coins-ajax', 'security' );
@@ -130,7 +133,10 @@ class Credits_Coins_Manager_Admin {
         $post_value = $this->data_model->get_post_credits( $post_id );
         $user_credit = $this->data_model->get_user_credits( $user_id );
         if( $user_credit < $post_value ) {
-            die('0');
+            die( json_encode( array(
+                'status' => 0,
+                'msg' => __('It seems you don\'t have enough credits to buy this post. Please buy new credits to proceed with the order', 'credits-coins')
+            ) ) );
         }
 
         $args = array(
@@ -142,12 +148,18 @@ class Credits_Coins_Manager_Admin {
         );
 
         if( ! $this->data_model->register_user_purchase( $user_id, $post_id, $post_value ) ) {
-            die('0');
+            die( json_encode( array(
+                'status' => 0,
+                'msg' => __('Ops ... it was not possible complete the order. Please try again!', 'credits-coins')
+            ) ) );
         }
 
         $this->data_model->set_user_credits( $user_id,  ( $user_credit - $post_value ));
         $this->data_model->register_credits_movement( $args );
-        die('1');
+        die( json_encode( array(
+            'status' => 1,
+            'msg' => 'Good! Your order has been completed successfully. you will redirected to the post page with the entire content in a few seconds.'
+        ) ) );
 
     }
 

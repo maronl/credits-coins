@@ -6,9 +6,6 @@ wordpress plugin to enable users with a wallet of credits to be spent on acquiri
 Plugin still Work In Progress
 
 ==Steps to complete version 1.0==
-- implement feedback user buying a post:
-    - ok. everythign is fine you should be redirected to the post in x seconds. otherwise click here
-    - ops there was some error buying the post. check you credits. if the error persist please contact us
 - implement function for admin to save user credits movements as csv
 - fix js with minify and versioning version
 - implement better js validation in the options page
@@ -21,6 +18,9 @@ Plugin still Work In Progress
 15/09/2014
 - refine filter for the_content with a nice html alert to buy the post
 - ajax to buy a post (sending post_id check user login, credits and nonce code)
+- implement feedback user buying a post:
+    - ok. everythign is fine you should be redirected to the post in x seconds. otherwise click here
+    - ops there was some error buying the post. check you credits. if the error persist please contact us
 
 12/09/2014
 - implement credits metabox to assign credits to each post (post, page, custom post) defined during plugin configuration
