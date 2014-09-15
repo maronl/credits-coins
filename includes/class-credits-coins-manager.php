@@ -141,7 +141,9 @@ class Credits_Coins_Manager {
         $this->loader->add_action( 'edit_user_profile', $admin, 'show_extra_profile_fields' );
         $this->loader->add_action( 'personal_options_update', $admin, 'save_extra_profile_fields' );
         $this->loader->add_action( 'edit_user_profile_update', $admin, 'save_extra_profile_fields' );
-        $this->loader->add_action( 'wp_ajax_user_credits_movements', $admin, 'get_json_user_credits_movements' );
+        $this->loader->add_action( 'wp_ajax_user_credits_movements', $admin, 'ajax_get_json_user_credits_movements' );
+        $this->loader->add_action( 'wp_ajax_buy_post', $admin, 'ajax_buy_post' );
+        $this->loader->add_action( 'wp_ajax_nopriv_buy_post', $admin, 'ajax_buy_post' );
         $this->loader->add_action( 'add_meta_boxes', $admin, 'add_meta_box_credits_coins' );
         $this->loader->add_action( 'save_post', $admin, 'save_meta_box_credits_coin' );
 
@@ -155,6 +157,8 @@ class Credits_Coins_Manager {
      */
     private function define_public_hooks() {
         $public = new Credits_Coins_Manager_Public( $this->version, $this->options, Credits_Coins_Model::getInstance());
+        $this->loader->add_action( 'init', $public, 'register_scripts' );
+        $this->loader->add_action( 'wp_enqueue_scripts', $public, 'enqueue_scripts' );
         $this->loader->add_filter( 'the_content', $public, 'the_content_filter', 99 );
         Credits_Coins_Theme_Functions::define_theme_functions();
 

@@ -89,14 +89,13 @@ class Credits_Coins_Manager_Admin {
 
     }
 
-    function get_json_user_credits_movements() {
-        global $wpdb;
+    function ajax_get_json_user_credits_movements() {
         $user = null;
         $limit = 15;
         $offset = 0;
-        if( isset($_POST['user']) ) $user = $wpdb->escape( $_POST['user'] );
-        if( isset($_POST['limit']) ) $limit = $wpdb->escape( $_POST['limit'] );
-        if( isset($_POST['offset']) ) $offset= $wpdb->escape( $_POST['offset'] );
+        if( isset($_POST['user']) ) $user =  esc_sql( $_POST['user'] );
+        if( isset($_POST['limit']) ) $limit = esc_sql( $_POST['limit'] );
+        if( isset($_POST['offset']) ) $offset= esc_sql( $_POST['offset'] );
 
         if($user){
             $user_credits_movements = $this->data_model->get_user_credits_movements( $user, $limit, $offset );
@@ -116,6 +115,41 @@ class Credits_Coins_Manager_Admin {
 
     }
 
+    function ajax_buy_post() {
+
+        $post_id = null;
+        if( isset($_POST['post_id']) ) $post_id =  esc_sql( $_POST['post_id'] );
+
+        if( ! is_user_logged_in() || is_null( $post_id ) ) {
+            die('0');
+        }
+
+        check_ajax_referer( 'credits-coins-ajax', 'security' );
+
+        $user_id = get_current_user_id();
+        $post_value = $this->data_model->get_post_credits( $post_id );
+        $user_credit = $this->data_model->get_user_credits( $user_id );
+        if( $user_credit < $post_value ) {
+            die('0');
+        }
+
+        $args = array(
+            'maker_user_id' => $user_id,
+            'destination_user_id' => $user_id,
+            'delta_credits' => -($post_value),
+            'tool_used' => 'credits-coins-plugin',
+            'movement_description' => 'buy post ' . $post_id,
+        );
+
+        if( ! $this->data_model->register_user_purchase( $user_id, $post_id, $post_value ) ) {
+            die('0');
+        }
+
+        $this->data_model->set_user_credits( $user_id,  ( $user_credit - $post_value ));
+        $this->data_model->register_credits_movement( $args );
+        die('1');
+
+    }
 
     function is_credits_coins_metabox_enabled( $post_type ) {
         if ( isset($this->options['post-types-values'][$post_type]) ){

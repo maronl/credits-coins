@@ -39,7 +39,7 @@ class Credits_Coins_Model {
     public function register_credits_movement( $args = array() ){
         /*
          * args accepetd are
-         * make_user_id
+         * maker_user_id
          * destination_user_id
          * delta_credits
          * tool_used
