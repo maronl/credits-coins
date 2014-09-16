@@ -102,5 +102,4 @@ jQuery(function() {
         jQuery( '#credits-by-group-values' ).val(new_settings);
     });
 
-
 });

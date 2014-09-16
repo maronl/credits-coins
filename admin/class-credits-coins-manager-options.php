@@ -13,7 +13,7 @@ class Credits_Coins_Manager_Options {
     }
 
     public function register_scripts() {
-        wp_register_script( 'credits-coins-admin-options-js', plugins_url( 'js/credits-coins-admin-options.js', __FILE__ ) );
+        wp_register_script( 'credits-coins-admin-options-js', plugins_url( 'js/prod/credits-coins-admin-options.' . $this->version . '.min.js', __FILE__ ) );
     }
 
     public function enqueue_scripts($hook) {

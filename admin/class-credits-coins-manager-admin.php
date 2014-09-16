@@ -15,7 +15,7 @@ class Credits_Coins_Manager_Admin {
     }
 
     public function register_scripts() {
-        wp_register_script( 'credits-coins-admin-user-profile-js', plugins_url( 'js/credits-coins-admin-user-profile.js', __FILE__ ) );
+        wp_register_script( 'credits-coins-admin-user-profile-js', plugins_url( 'js/prod/credits-coins-admin-user-profile.' . $this->version . '.min.js', __FILE__ ) );
     }
 
     public function enqueue_scripts($hook) {

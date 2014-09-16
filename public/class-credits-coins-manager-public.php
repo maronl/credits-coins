@@ -15,7 +15,7 @@ class Credits_Coins_Manager_Public {
     }
 
     public function register_scripts() {
-        wp_register_script( 'credits-coins-public-js', plugins_url( 'js/credits-coins-public.js', __FILE__ ), array( 'jquery' ) );
+        wp_register_script( 'credits-coins-public-js', plugins_url( 'js/prod/credits-coins-public.' . $this->version . '.min.js', __FILE__ ), array( 'jquery' ) );
         wp_localize_script( 'credits-coins-public-js', 'ajax_credits_coins', array(
             'url' => '/wp-admin/admin-ajax.php',
             'security' => wp_create_nonce( "credits-coins-ajax" ),
