@@ -6,7 +6,6 @@ wordpress plugin to enable users with a wallet of credits to be spent on acquiri
 Plugin still Work In Progress
 
 ==Steps to complete version 1.0==
-- use not minified version on dev environment for js for debug purpose
 - implement better js validation in the options page
 - implement e2e testing
 - implement phpunit testing ( I know it should be done before the development )
@@ -19,6 +18,7 @@ Plugin still Work In Progress
 - fix js with minify and versioning
 - added gruntfile and package.json
 - added livereload functionality (you need to install https://wordpress.org/plugins/livereload/ )
+- use not minified version on dev environment for js for debug purpose
 
 15/09/2014
 - refine filter for the_content with a nice html alert to buy the post
