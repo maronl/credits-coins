@@ -25,11 +25,6 @@ jQuery(function() {
         }
     });
 
-    jQuery('#btn-scarica-movimenti').click(function(event){
-        event.preventDefault();
-        alert("to be done!");
-    });
-
     function buildHTMLForLatestRecharges(jsonLatestRecharges){
         countAllElement = jsonLatestRecharges.length;
         html = "<table cellpadding='10'>";

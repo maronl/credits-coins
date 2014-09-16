@@ -6,7 +6,6 @@ wordpress plugin to enable users with a wallet of credits to be spent on acquiri
 Plugin still Work In Progress
 
 ==Steps to complete version 1.0==
-- implement function for admin to save user credits movements as csv
 - fix js with minify and versioning version
 - implement better js validation in the options page
 - implement e2e testing
@@ -14,6 +13,9 @@ Plugin still Work In Progress
 - make message to buy a post customizable by the user (option or file?)
 
 == Hard Working on :) ==
+
+16/09/2014
+- implement function for admin to save user credits movements as csv
 
 15/09/2014
 - refine filter for the_content with a nice html alert to buy the post

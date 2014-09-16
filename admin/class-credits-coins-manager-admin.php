@@ -8,6 +8,12 @@ class Credits_Coins_Manager_Admin {
 
     private $data_model;
 
+    function __construct( $version, $options, $data_model ) {
+        $this->version = $version;
+        $this->options = $options;
+        $this->data_model = $data_model;
+    }
+
     public function register_scripts() {
         wp_register_script( 'credits-coins-admin-user-profile-js', plugins_url( 'js/credits-coins-admin-user-profile.js', __FILE__ ) );
     }
@@ -17,12 +23,6 @@ class Credits_Coins_Manager_Admin {
         if( in_array( $hook, $enabling_hooks ) ){
             wp_enqueue_script('credits-coins-admin-user-profile-js');
         }
-    }
-
-    function __construct( $version, $options, $data_model ) {
-        $this->version = $version;
-        $this->options = $options;
-        $this->data_model = $data_model;
     }
 
     function set_default_credits_after_registration( $user_id ) {
@@ -44,7 +44,8 @@ class Credits_Coins_Manager_Admin {
         return '';
     }
 
-    function show_extra_profile_fields( $user ) { ?>
+    function show_extra_profile_fields( $user ) {
+        $nonce = wp_create_nonce( 'credits-coins-movements' );?>
 
         <h3>Crediti utente</h3>
 
@@ -55,7 +56,8 @@ class Credits_Coins_Manager_Admin {
 
                 <td>
                     <input type="text" name="credits-coins-user-credits" id="credits-coins-user-credits" value="<?php echo esc_attr( get_user_meta( $user->ID, 'credits-coins-user-credits',true) ); ?>" class="regular-text" />
-                    <a id="btn-visualizza-movimenti" href="<?php echo $user->ID ?>" class="button">Visualizza ultimi 15 movimenti</a> <a id="btn-scarica-movimenti" href="#" class="button">Scarica tutti i movimenti in formato .cvs</a> <br />
+                    <a id="btn-visualizza-movimenti" href="<?php echo $user->ID ?>" class="button">Visualizza ultimi 15 movimenti</a>
+                        <a id="btn-scarica-movimenti" href="<?php echo plugin_dir_url( __FILE__  ) . "export-credits-movements.php?_wpnonce=" . $nonce . "&user_id=" . $user->ID; ?>">Scarica tutti i movimenti in formato .cvs</a> <br />
                     <span class="description">Crediti disponibili dell'utente. modificare con cura :)</span>
                 </td>
             </tr>
