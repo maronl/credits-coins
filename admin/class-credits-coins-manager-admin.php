@@ -8,14 +8,24 @@ class Credits_Coins_Manager_Admin {
 
     private $data_model;
 
+    private $js_configuration;
+
     function __construct( $version, $options, $data_model ) {
         $this->version = $version;
         $this->options = $options;
         $this->data_model = $data_model;
+        $this->js_configuration = array();
+        if(WP_DEBUG == false) {
+            $this->js_configuration['js_path'] = 'js/prod/';
+            $this->js_configuration['js_extension'] = $this->version . '.min.js';
+        }else{
+            $this->js_configuration['js_path'] = 'js/';
+            $this->js_configuration['js_extension'] = 'js';
+        }
     }
 
     public function register_scripts() {
-        wp_register_script( 'credits-coins-admin-user-profile-js', plugins_url( 'js/prod/credits-coins-admin-user-profile.' . $this->version . '.min.js', __FILE__ ) );
+        wp_register_script( 'credits-coins-admin-user-profile-js', plugins_url( $this->js_configuration['js_path'] . 'credits-coins-admin-user-profile.' . $this->js_configuration['js_extension'], __FILE__ ) );
     }
 
     public function enqueue_scripts($hook) {

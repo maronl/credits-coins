@@ -6,14 +6,22 @@ class Credits_Coins_Manager_Options {
 
     private $options;
 
-    function __construct($version, $options)
-    {
+    private $js_configuration;
+
+    function __construct($version, $options) {
         $this->version = $version;
         $this->options = $options;
+        if(WP_DEBUG == false) {
+            $this->js_configuration['js_path'] = 'js/prod/';
+            $this->js_configuration['js_extension'] = $this->version . '.min.js';
+        }else{
+            $this->js_configuration['js_path'] = 'js/';
+            $this->js_configuration['js_extension'] = 'js';
+        }
     }
 
     public function register_scripts() {
-        wp_register_script( 'credits-coins-admin-options-js', plugins_url( 'js/prod/credits-coins-admin-options.' . $this->version . '.min.js', __FILE__ ) );
+        wp_register_script( 'credits-coins-admin-options-js', plugins_url( $this->js_configuration['js_path'] . 'credits-coins-admin-options.' . $this->js_configuration['js_extension'], __FILE__ ) );
     }
 
     public function enqueue_scripts($hook) {

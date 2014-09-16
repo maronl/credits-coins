@@ -25,6 +25,9 @@ module.exports = function(grunt) {
                 files: ['admin/js/*.js','public/js/*.js'],
                 tasks: ['uglify'],
             },
+                php: {
+              files: ['*.php', '**/*.php']
+            },
             options: {
                 livereload: true,
                 spawn: false

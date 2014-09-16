@@ -148,4 +148,5 @@ class Credits_Coins_Model {
 
         return $check;
     }
+
 } 
