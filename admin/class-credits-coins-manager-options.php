@@ -130,6 +130,15 @@ class Credits_Coins_Manager_Options {
     }
 
     function sanitize( $input ) {
+
+        foreach ($input as $key => $value){
+            $input[$key] =  sanitize_text_field($value);
+        }
+
+        $input['new-user-default-credits'] = intval( $input['new-user-default-credits'] );
+
+        $input['single-credit-currency'] = intval( $input['single-credit-currency'] );
+
         return $input;
     }
 
