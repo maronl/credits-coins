@@ -18,6 +18,12 @@ jQuery(function() {
     });
 
     jQuery( '#add-post-type-value' ).on( 'click', function() {
+
+        cc_set_validation_rules_post_types_values();
+        if( ! jQuery('form[action="options.php"]').valid() ) {
+            return;
+        }
+
         if(post_type = jQuery( "#new-post-type-value-name option:selected" ).val() == 0)
             return;
 
@@ -70,6 +76,12 @@ jQuery(function() {
     });
 
     jQuery( '#add-credits-by-group-value' ).on( 'click', function() {
+
+        cc_set_validation_rules_credits_groups_values();
+        if( ! jQuery('form[action="options.php"]').valid() ) {
+            return;
+        }
+
         credits_number = jQuery( "#new-credits-by-group-value" ).val();
         credits_price = jQuery( "#new-credits-by-group-price" ).val();
 
@@ -102,4 +114,84 @@ jQuery(function() {
         jQuery( '#credits-by-group-values' ).val(new_settings);
     });
 
+    jQuery.validator.addMethod("valueNotEquals", function(value, element, arg){
+        return arg != value;
+    }, "Value must not equal arg.");
+
+    jQuery('#submit').click(function(e){
+        cc_set_validation_rules_forms();
+    });
+
+    cc_set_validation_rules_forms();
+
 });
+
+var cc_set_validation_rules_forms = function() {
+    jQuery('form[action="options.php"]').removeData('validator');
+    jQuery('form[action="options.php"]').validate({
+        rules: {
+            "credits-coins-options[new-user-default-credits]": {
+                required: true,
+                digits: true,
+                min: 1
+            },
+            "credits-coins-options[single-credit-value]": {
+                required: true,
+                digits: true,
+                min: 1
+            },
+            "credits-coins-options[single-credit-currency]":{
+                required: true
+            }
+        },
+
+        messages: {
+            "credits-coins-options[new-user-default-credits]": "Enter a number greater than 0",
+            "credits-coins-options[single-credit-value]": "Enter a number greater than 0",
+            "credits-coins-options[single-credit-currency]": "Select a currency",
+        }
+    });
+}
+var cc_set_validation_rules_credits_groups_values = function() {
+    jQuery('form[action="options.php"]').removeData('validator');
+    jQuery('form[action="options.php"]').validate({
+        rules: {
+            "new-credits-by-group-value": {
+                required: true,
+                digits: true,
+                min: 1
+            },
+            "new-credits-by-group-price":{
+                required: true,
+                digits: true,
+                min: 1
+            }
+        },
+
+        messages: {
+            "new-credits-by-group-value": "Enter a number greater than 0",
+            "new-credits-by-group-price": "Enter a number greater than 0",
+        }
+    });
+}
+var cc_set_validation_rules_post_types_values = function() {
+    jQuery('form[action="options.php"]').removeData('validator');
+    jQuery('form[action="options.php"]').validate({
+        rules: {
+            "new-post-type-value-name": {
+                required: true,
+                valueNotEquals: 0
+            },
+            "new-post-type-value-credit":{
+                required: true,
+                digits: true,
+                min: 1
+            }
+        },
+
+        messages: {
+            "new-post-type-value-name": "Select a post type",
+            "new-post-type-value-credit": "Enter a number greater than 0",
+        }
+    });
+}

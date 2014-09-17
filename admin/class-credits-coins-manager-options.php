@@ -22,11 +22,23 @@ class Credits_Coins_Manager_Options {
 
     public function register_scripts() {
         wp_register_script( 'credits-coins-admin-options-js', plugins_url( $this->js_configuration['js_path'] . 'credits-coins-admin-options.' . $this->js_configuration['js_extension'], __FILE__ ) );
+        wp_register_script( 'jquery-validation-js', plugins_url( 'js/lib/jquery.validate.min.js', __FILE__ ) );
     }
 
     public function enqueue_scripts($hook) {
         if( 'settings_page_credits-coins-plugin-options' == $hook ){
             wp_enqueue_script('credits-coins-admin-options-js');
+            wp_enqueue_script('jquery-validation-js');
+        }
+    }
+
+    public function register_styles() {
+        wp_register_style( 'credits-coins-admin-options-css', plugins_url( 'css/credits-coins-admin-options.css', __FILE__  ) );
+    }
+
+    public function enqueue_styles($hook) {
+        if( 'settings_page_credits-coins-plugin-options' == $hook ) {
+            wp_enqueue_style( 'credits-coins-admin-options-css', false, array(), $this->version );
         }
     }
 
@@ -185,9 +197,9 @@ class Credits_Coins_Manager_Options {
 
         echo '</ul>';
 
-        echo __( 'Number of Credits', 'credits-coins' ) . ' <input type="text" id="new-credits-by-group-value" value="0" size="3" autocomplete="off" />';
+        echo __( 'Number of Credits', 'credits-coins' ) . ' <input type="text" id="new-credits-by-group-value" name="new-credits-by-group-value" value="0" size="3" autocomplete="off" />';
 
-        echo __( 'Price', 'credits-coins' ) . ' <input type="text" id="new-credits-by-group-price" value="0" size="3" autocomplete="off" />';
+        echo __( 'Price', 'credits-coins' ) . '<input type="text" id="new-credits-by-group-price" name="new-credits-by-group-price" value="0" size="3" autocomplete="off" />';
 
         echo ' <input id="add-credits-by-group-value" type="button" class="button button-primary" value="Add" />';
 
@@ -222,7 +234,7 @@ class Credits_Coins_Manager_Options {
 
         echo '</ul>';
 
-        echo '<select id="new-post-type-value-name" autocomplete="off">';
+        echo '<select id="new-post-type-value-name" name="new-post-type-value-name" autocomplete="off">';
 
         echo '<option value="0">' . __( 'select a post type', 'credits-coins' ) . '</option>';
 
@@ -237,7 +249,7 @@ class Credits_Coins_Manager_Options {
 
         echo '</select> ';
 
-        echo __( 'Default Credits', 'credits-coins' ) . ' <input type="text" id="new-post-type-value-credit" value="0" size="3" />';
+        echo __( 'Default Credits', 'credits-coins' ) . ' <input type="text" id="new-post-type-value-credit" name="new-post-type-value-credit" value="0" size="3" autocomplete="off" />';
 
         echo ' <input id="add-post-type-value" type="button" class="button button-primary" value="Add" />';
 
