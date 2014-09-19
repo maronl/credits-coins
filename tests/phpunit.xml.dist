@@ -1,0 +1,12 @@
+<phpunit
+	bootstrap="../../../../../tests/wp-tests/tests/phpunit/includes/bootstrap.php"
+        backupGlobals="false"
+        colors="true"
+        >
+    <testsuites>
+        <testsuite>
+            <directory suffix=".php">phpunit/tests</directory>
+            <!-- <file phpVersion="5.3.0">tests/phpunit/tests/samplemock.php</file> -->
+       </testsuite>
+   </testsuites>
+</phpunit>

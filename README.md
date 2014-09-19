@@ -6,21 +6,43 @@ wordpress plugin to enable users with a wallet of credits to be spent on acquiri
 Plugin still Work In Progress
 
 ==Steps to complete version 1.0==
-- implement e2e testing
+- add e2e test per public side
+ - set credits for user before buy a post
+- add e2e test per public side
+  - content accessible for user logged that has bought the post
+- add e2e testing to remove default credits values per page, post
+
+- implement code to install db structure during the plugin initialization
 - implement phpunit testing ( I know it should be done before the development )
 - make message to buy a post customizable by the user (option or file?)
 
-step2.0
+step 1.0.1
 - remove cost configuration of Credits. it should be managed by some other plugin that associate a cost to each credit and group of credits
 - implement plugin credits-coins-recharge allow user to buy credits. actually create a bridge with paypal payments. make it extendible with other methods of payment
+- selenium server used during test how is installed? composer? in git?
 
 
 == Hard Working on :) ==
+
+19/09/2014
+- added e2e tests
+  - check if plugin submenu for setting is presetn
+  - set defaults credits for page, post
+  - check credit box value per existing post hello world is 0
+  - check credit box value per new post is 4
+  - check change credit post per hello world post
+  - test options validation
+- add e2e test per public side
+  - content not accessible for user not logged
+  - content not accessible for user logged without buying the post
+
 
 17/09/2014
 - implement better js validation in the options page
  - add jquery validation
  - implement rules for main form
+- implement a bit of validation server side for options page
+- add e2e framework and make hello worl test
 
 16/09/2014
 - implement function for admin to save user credits movements as csv

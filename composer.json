@@ -1,0 +1,5 @@
+{
+    "require": {
+        "netwing/selenium-server-standalone": "2.42.2"
+    }
+}
