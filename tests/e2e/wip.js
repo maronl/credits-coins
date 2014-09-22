@@ -26,6 +26,7 @@ function login_steps() {
     browser.sleep( 2000 );
 }
 
+
 function logout_steps() {
     browser.get('/wp-admin');
     browser.sleep( 2000 );

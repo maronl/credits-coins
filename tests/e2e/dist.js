@@ -24,13 +24,23 @@ describe('Hello World form', function() {
     });
 
 
-    it("new settings submenu is present", function () {
+    it("set default values for plugin", function () {
 
-        browser.get('/wp-admin/options-general.php');
-
+        browser.get('/wp-admin/options-general.php?page=credits-coins-plugin-options');
         browser.sleep( 2000 );
 
-        expect(element(by.css('[href="options-general.php?page=credits-coins-plugin-options"]')).isPresent()).toBe(true);
+        element(by.id('new-user-default-credits')).clear();
+
+        element(by.id('new-user-default-credits')).sendKeys('10');
+
+        element(by.id('single-credit-value')).clear();
+
+        element(by.id('single-credit-value')).sendKeys('1');
+
+        element(by.id('submit')).click();
+        browser.sleep( 2000 );
+
+        expect(element(by.css("#setting-error-settings_updated")).getText()).toBe('Settings saved.');
 
     });
 
@@ -56,7 +66,7 @@ describe('Hello World form', function() {
         element(by.id('submit')).click();
         browser.sleep( 2000 );
 
-        expect(element(by.css("#setting-error-settings_updated p strong")).getText()).toBe('Settings saved.');
+        expect(element(by.css("#setting-error-settings_updated")).getText()).toBe('Settings saved.');
 
         expect(element(by.css('li[data-value="post,4"]')).isPresent()).toBe(true);
 
@@ -83,7 +93,7 @@ describe('Hello World form', function() {
         element(by.id('submit')).click();
         browser.sleep( 2000 );
 
-        expect(element(by.css("#setting-error-settings_updated p strong")).getText()).toBe('Settings saved.');
+        expect(element(by.css("#setting-error-settings_updated")).getText()).toBe('Settings saved.');
 
         expect(element(by.css('li[data-value="page,6"]')).isPresent()).toBe(true);
 
@@ -136,6 +146,25 @@ describe('Hello World form', function() {
         expect(element(by.id('message')).getText()).toMatch('Post updated. View post');
 
         expect(element(by.id('post-type-value')).getAttribute('value')).toBe('12');
+
+    });
+
+
+    it("set value for existing post helloworld to 4", function() {
+
+        browser.get('/wp-admin/post.php?post=1&action=edit');
+        browser.sleep( 2000 );
+
+        element(by.id('post-type-value')).clear();
+
+        element(by.id('post-type-value')).sendKeys('4');
+
+        element(by.id('publish')).click();
+        browser.sleep( 2000 );
+
+        expect(element(by.id('message')).getText()).toMatch('Post updated. View post');
+
+        expect(element(by.id('post-type-value')).getAttribute('value')).toBe('4');
 
     });
 
@@ -248,6 +277,27 @@ describe('Hello World form', function() {
     });
 
 
+    it("administrator set user credits", function() {
+
+        login_steps();
+
+        browser.get('/wp-admin/user-edit.php?user_id=1');
+        browser.sleep( 2000 );
+
+        element(by.id('credits-coins-user-credits')).clear();
+
+        element(by.id('credits-coins-user-credits')).sendKeys('150');
+
+        element(by.id('submit')).click();
+        browser.sleep( 2000 );
+
+        expect(element(by.id('message')).getText()).toBe('Profile updated.');
+
+        expect(element(by.id('credits-coins-user-credits')).getAttribute('value')).toBe('150');
+
+    });
+
+
     it("user not logged accessing content hello world post protected by credits, anonymous user cannot access it", function() {
 
         login_steps();
@@ -260,6 +310,23 @@ describe('Hello World form', function() {
         expect(element(by.id('btn-buy-post')).isPresent()).toBe(true);
 
         expect(element(by.css('body')).getText()).not.toMatch('.*Welcome to WordPress.*');
+
+    });
+
+
+    it("user not logged try to buy a post", function() {
+
+        login_steps();
+
+        logout_steps();
+
+        browser.get('/index.php?p=1');
+        browser.sleep( 2000 );
+
+        element(by.id('btn-buy-post')).click();
+        browser.sleep( 2000 );
+
+        expect(element(by.css('.alert.alert-danger')).getText()).toBe('Ops ... To buy a post before do login. Thanks!');
 
     });
 
@@ -278,7 +345,109 @@ describe('Hello World form', function() {
     });
 
 
+    it("user logged buy hello world post", function() {
 
+        login_steps();
+
+        browser.get('/index.php?p=1');
+        browser.sleep( 2000 );
+
+        expect(element(by.id('btn-buy-post')).isPresent()).toBe(true);
+
+        expect(element(by.css('body')).getText()).not.toMatch('.*Welcome to WordPress.*');
+
+        element(by.id('btn-buy-post')).click();
+        browser.sleep( 2000 );
+
+        expect(element(by.css('.alert.alert-success')).getText()).toMatch('.*Good! Your order has been completed successfully.*');
+
+    });
+
+
+    it("user logged accessing content hello world post", function() {
+
+        login_steps();
+
+        browser.get('/index.php?p=1');
+        browser.sleep( 2000 );
+
+        expect(element(by.id('btn-buy-post')).isPresent()).toBe(false);
+
+        expect(element(by.css('body')).getText()).toMatch('.*Welcome to WordPress.*');
+
+    });
+
+
+    it("check registration user movement: buying post hello world", function() {
+
+        login_steps();
+
+        browser.get('/wp-admin/user-edit.php?user_id=1');
+        browser.sleep( 2000 );
+
+        element(by.id('btn-visualizza-movimenti')).click();
+        browser.sleep( 2000 );
+
+        expect(element(by.css('#wrapper-latest-recharges tr:nth-child(2)')).getText()).toMatch('2 maronl_admin maronl_admin (.*) -4 credits-co buy post 1');
+
+    });
+
+
+    it("check registration user movement: credit recharge using admin panel", function() {
+
+        login_steps();
+
+        browser.get('/wp-admin/user-edit.php?user_id=1');
+        browser.sleep( 2000 );
+
+        element(by.id('btn-visualizza-movimenti')).click();
+        browser.sleep( 2000 );
+
+        expect(element(by.css('#wrapper-latest-recharges tr:nth-child(3)')).getText()).toMatch('1 maronl_admin maronl_admin (.*) 150 wp-admin defined new credits payoff using wp-admin');
+
+    });
+
+
+    it("remove default credits for post", function () {
+
+        login_steps();
+
+        browser.get('/wp-admin/options-general.php?page=credits-coins-plugin-options');
+        browser.sleep( 2000 );
+
+        expect(element(by.css('a.remove-post-type-value[href="#post,4"]')).isPresent()).toBe(true);
+
+        element(by.css('a.remove-post-type-value[href="#post,4"]')).click();
+
+        expect(element(by.css('a.remove-post-type-value[href="#post,4"]')).isPresent()).toBe(false);
+
+        element(by.id('submit')).click();
+        browser.sleep( 2000 );
+
+        expect(element(by.css("#setting-error-settings_updated")).getText()).toBe('Settings saved.');
+
+    });
+
+
+    it("remove default credits for page", function () {
+
+        login_steps();
+
+        browser.get('/wp-admin/options-general.php?page=credits-coins-plugin-options');
+        browser.sleep( 2000 );
+
+        expect(element(by.css('a.remove-post-type-value[href="#page,6"]')).isPresent()).toBe(true);
+
+        element(by.css('a.remove-post-type-value[href="#page,6"]')).click();
+
+        expect(element(by.css('a.remove-post-type-value[href="#page,6"]')).isPresent()).toBe(false);
+
+        element(by.id('submit')).click();
+        browser.sleep( 2000 );
+
+        expect(element(by.css("#setting-error-settings_updated")).getText()).toBe('Settings saved.');
+
+    });
 
 
     it("user logout", function() {

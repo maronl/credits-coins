@@ -6,12 +6,6 @@ wordpress plugin to enable users with a wallet of credits to be spent on acquiri
 Plugin still Work In Progress
 
 ==Steps to complete version 1.0==
-- add e2e test per public side
- - set credits for user before buy a post
-- add e2e test per public side
-  - content accessible for user logged that has bought the post
-- add e2e testing to remove default credits values per page, post
-
 - implement code to install db structure during the plugin initialization
 - implement phpunit testing ( I know it should be done before the development )
 - make message to buy a post customizable by the user (option or file?)
@@ -23,6 +17,21 @@ step 1.0.1
 
 
 == Hard Working on :) ==
+
+22/09/2014
+- reset data scripts ... delete all the data in the test DB beloging to the credits coins plugin
+    truncate plugin_dev.wp_credits_coins_movements;
+    truncate plugin_dev.wp_credits_coins_purchases;
+    delete from plugin_dev.wp_options where plugin_dev.wp_options.option_name = 'credits-coins-options';
+    delete from plugin_dev.wp_postmeta where plugin_dev.wp_postmeta.meta_key like 'credits-coins-post-value';
+    delete from plugin_dev.wp_usermeta where plugin_dev.wp_usermeta.meta_key like 'credits-coins-user-credits';
+- test view latest 15 credits movements in the user profile
+- add e2e testing to remove default credits values per page, post
+
+- add e2e test per public side
+ - content accessible for user logged that has bought the post
+ - set credits for user before buy a post
+
 
 19/09/2014
 - added e2e tests
