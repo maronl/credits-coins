@@ -9,9 +9,9 @@ Plugin still Work In Progress
 - implement code to install db structure during the plugin initialization
 - implement phpunit testing ( I know it should be done before the development )
 - make message to buy a post customizable by the user (option or file?)
+- remove cost configuration of Credits. it should be managed by some other plugin that associate a cost to each credit and group of credits
 
 step 1.0.1
-- remove cost configuration of Credits. it should be managed by some other plugin that associate a cost to each credit and group of credits
 - implement plugin credits-coins-recharge allow user to buy credits. actually create a bridge with paypal payments. make it extendible with other methods of payment
 - selenium server used during test how is installed? composer? in git?
 

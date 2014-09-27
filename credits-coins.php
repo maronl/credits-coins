@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The file responsible for starting the Credits Coins plugin
  *

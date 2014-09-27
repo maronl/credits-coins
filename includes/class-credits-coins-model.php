@@ -13,8 +13,12 @@ class Credits_Coins_Model {
     }
 
     public function set_user_credits ( $user_id = null, $value = null ) {
-        if( is_null($user_id) || is_null( $value ) ) {
+        if( is_null( $user_id ) || is_null( $value ) || ( false == get_userdata( $user_id ) ) ) {
             return false;
+        }
+
+        if($value == $this->get_user_credits ( $user_id )){
+            return true;
         }
 
         return update_user_meta( $user_id, 'credits-coins-user-credits', $value );
@@ -25,8 +29,12 @@ class Credits_Coins_Model {
     }
 
     public function set_post_credits ( $post_id = null, $value = null ) {
-        if( is_null( $post_id ) || is_null( $value ) ) {
+        if( is_null( $post_id ) || is_null( $value )  || ! is_string( get_post_status( $post_id ) ) ) {
             return false;
+        }
+
+        if($value == $this->get_post_credits ( $post_id )){
+            return true;
         }
 
         return update_post_meta( $post_id, 'credits-coins-post-value', $value );
