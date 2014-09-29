@@ -93,10 +93,10 @@ class Credits_Coins_Model {
         if( ! is_null( $user) ) {
             $latest_movements = $wpdb->get_results(
                 "
-                SELECT wp_credits_coins_movements.id, maker.user_login as maker_user, destination.user_login as destination_user, wp_credits_coins_movements.time, wp_credits_coins_movements.value, wp_credits_coins_movements.tools, wp_credits_coins_movements.description
-                FROM wp_credits_coins_movements
-                left join wp_users as maker on maker.id =  wp_credits_coins_movements.maker_user_id
-                left join wp_users as destination on destination.id =  wp_credits_coins_movements.destination_user_id
+                SELECT " . $wpdb->prefix . "credits_coins_movements.id, maker.user_login as maker_user, destination.user_login as destination_user, " . $wpdb->prefix . "credits_coins_movements.time, " . $wpdb->prefix . "credits_coins_movements.value, " . $wpdb->prefix . "credits_coins_movements.tools, " . $wpdb->prefix . "credits_coins_movements.description
+                FROM " . $wpdb->prefix . "credits_coins_movements
+                left join " . $wpdb->prefix . "users as maker on maker.id =  " . $wpdb->prefix . "credits_coins_movements.maker_user_id
+                left join " . $wpdb->prefix . "users as destination on destination.id =  " . $wpdb->prefix . "credits_coins_movements.destination_user_id
                 WHERE destination_user_id = " . $user . " ORDER BY id desc limit " . $offset . "," . $limit . "
 			    ", ARRAY_A
             );
@@ -134,6 +134,24 @@ class Credits_Coins_Model {
         return $rows_affected;
     }
 
+    function get_user_purchases( $user = null, $limit = 15, $offset = 0) {
+        global $wpdb;
+
+        if( ! is_null( $user) ) {
+            $latest_movements = $wpdb->get_results(
+                "
+                SELECT *
+                FROM " . $wpdb->prefix . "credits_coins_purchases
+                WHERE user_id = " . $user . " ORDER BY id desc limit " . $offset . "," . $limit . "
+			    ", ARRAY_A
+            );
+
+        }
+
+        return $latest_movements;
+
+    }
+
     function user_can_access_post( $user_id = null, $post_id = null ){
         global $wpdb;
         if( is_null( $user_id ) || is_null( $post_id ) ) {
@@ -147,7 +165,7 @@ class Credits_Coins_Model {
                  AND user_id = %d
                 ",
                 $post_id, $user_id
-            )
+            ), ARRAY_A
         );
 
         if( is_null( $check ) ){
