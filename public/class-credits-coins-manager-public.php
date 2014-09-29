@@ -46,7 +46,7 @@ class Credits_Coins_Manager_Public {
             }
             ob_start();
             if( file_exists( get_template_directory() . '/cc-buy-post.php' ) ){
-                include get_template_directory() . '/
+                include get_template_directory() . '/cc-buy-post.php';
             }else {
                 include 'partials/buy-post.php';
             }
