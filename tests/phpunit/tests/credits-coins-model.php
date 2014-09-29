@@ -59,4 +59,60 @@ class Tests_Secure_Attachments extends WP_UnitTestCase
     }
 
 
+    function test_method_register_credits_movement()
+    {
+        $data_model = credits_coins_model::getinstance();
+        $user_id = 1;
+
+        $args = array(
+            'maker_user_id' => $user_id,
+            'destination_user_id' => $user_id,
+            'delta_credits' => 100,
+            'tool_used' => 'wp_admin',
+            'movement_description' => 'phpunit testing :)'
+        );
+        $this->assertEquals(1, $data_model->register_credits_movement($args));
+        $this->assertCount(1, $data_model->get_user_credits_movements(1));
+
+    }
+
+
+    function test_method_get_user_credits_movements()
+    {
+        $data_model = credits_coins_model::getinstance();
+        $user_id = 1;
+        $this->assertCount(0, $data_model->get_user_credits_movements($user_id));
+
+    }
+
+    function test_method_register_user_purchase()
+    {
+        $data_model = credits_coins_model::getinstance();
+        $user_id = 1;
+        $post_id = 1;
+        $post_value = 10;
+        $purchase_note = 'phpunit testing purchase';
+        $this->assertEquals( false, $data_model->register_user_purchase( $user_id ) );
+        $this->assertEquals( false, $data_model->register_user_purchase( $user_id, $post_id ) );
+        $this->assertEquals( 1, $data_model->register_user_purchase( $user_id, $post_id, $post_value ) );
+        $this->assertCount( 1, $data_model->get_user_purchases( $user_id ) );
+        $this->assertEquals( false, $data_model->register_user_purchase( $user_id, $post_id, $post_value, $purchase_note ) );
+        $this->assertCount( 1, $data_model->get_user_purchases( $user_id ) );
+
+    }
+
+    function test_method_user_can_access_post()
+    {
+        $data_model = credits_coins_model::getinstance();
+        $user_id = 1;
+        $post_id = 1;
+        $post_value = 10;
+        $purchase_note = 'phpunit testing purchase';
+        $this->assertEquals( false, $data_model->user_can_access_post( $user_id, $post_id ) );
+        $this->assertEquals( 1, $data_model->register_user_purchase( $user_id, $post_id, $post_value, $purchase_note ) );
+        $number_informaton_purchase = 6;
+        $this->assertCount( $number_informaton_purchase, $data_model->user_can_access_post( $user_id, $post_id ) );
+
+    }
+
 }
