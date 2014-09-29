@@ -8,6 +8,9 @@ Plugin still Work In Progress
 ==Steps to complete version 1.0==
 - make message to buy a post customizable by the user (option or file?)
 - remove cost configuration of Credits. it should be managed by some other plugin that associate a cost to each credit and group of credits
+- review template structure to commit all the necessary staff ... composer, grunt ecc
+- fix execution of protractor adding reset of DB schema with plugin data
+- how manage a build process??
 
 step 1.0.1
 - implement plugin credits-coins-recharge allow user to buy credits. actually create a bridge with paypal payments. make it extendible with other methods of payment

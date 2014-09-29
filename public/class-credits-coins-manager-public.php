@@ -45,7 +45,11 @@ class Credits_Coins_Manager_Public {
                 $content = substr($content, 0, $check_preview);
             }
             ob_start();
-            include 'partials/buy-post.php';
+            if( file_exists( get_template_directory() . '/cc-buy-post.php' ) ){
+                include get_template_directory() . '/
+            }else {
+                include 'partials/buy-post.php';
+            }
             $out = ob_get_contents();
             ob_end_clean();
             $content .=  $out;

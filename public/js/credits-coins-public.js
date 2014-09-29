@@ -13,7 +13,6 @@ jQuery(function() {
                     'security': ajax_credits_coins.security,
                 },
                 function(response){
-                    console.log(response);
                     jQuery('#btn-buy-post').removeClass('button-disabled');
                     if(response.status == 1){
                         jQuery('#btn-buy-post').after(jQuery(credits_coins_render_alert_buy_post_success(response.msg)).hide());
