@@ -6,17 +6,20 @@ wordpress plugin to enable users with a wallet of credits to be spent on acquiri
 Plugin still Work In Progress
 
 ==Steps to complete version 1.0==
-- implement code to install db structure during the plugin initialization
-- implement phpunit testing ( I know it should be done before the development )
 - make message to buy a post customizable by the user (option or file?)
 - remove cost configuration of Credits. it should be managed by some other plugin that associate a cost to each credit and group of credits
 
 step 1.0.1
 - implement plugin credits-coins-recharge allow user to buy credits. actually create a bridge with paypal payments. make it extendible with other methods of payment
 - selenium server used during test how is installed? composer? in git?
+- manage update DB schema for plugin updates
 
 
 == Hard Working on :) ==
+
+29/9ì09/2014
+- implemented phpunit for admin functions
+- implement code to install db structure during the plugin initialization
 
 22/09/2014
 - reset data scripts ... delete all the data in the test DB beloging to the credits coins plugin
