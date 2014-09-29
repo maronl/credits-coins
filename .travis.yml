@@ -32,3 +32,5 @@ matrix:
       env: WP_VERSION=3.8
     - php: "5.2"
       env: WP_VERSION=3.8
+
+script: phpunit --configuration tests/phpunit.xml.dist
