@@ -33,10 +33,6 @@ describe('Hello World form', function() {
 
         element(by.id('new-user-default-credits')).sendKeys('10');
 
-        element(by.id('single-credit-value')).clear();
-
-        element(by.id('single-credit-value')).sendKeys('1');
-
         element(by.id('submit')).click();
         browser.sleep( 2000 );
 
@@ -176,14 +172,10 @@ describe('Hello World form', function() {
 
         element(by.id('new-user-default-credits')).clear();
 
-        element(by.id('single-credit-value')).clear();
-
         element(by.id('submit')).click();
         browser.sleep( 2000 );
 
         expect(element(by.css('label[for="new-user-default-credits"]')).isPresent()).toBe(true);
-
-        expect(element(by.css('label[for="single-credit-value"]')).isPresent()).toBe(true);
 
     });
 
@@ -197,16 +189,10 @@ describe('Hello World form', function() {
 
         element(by.id('new-user-default-credits')).sendKeys('aaa');
 
-        element(by.id('single-credit-value')).clear();
-
-        element(by.id('single-credit-value')).sendKeys('bbb');
-
         element(by.id('submit')).click();
         browser.sleep( 2000 );
 
         expect(element(by.css('label[for="new-user-default-credits"]')).isPresent()).toBe(true);
-
-        expect(element(by.css('label[for="single-credit-value"]')).isPresent()).toBe(true);
 
     });
 
@@ -220,16 +206,10 @@ describe('Hello World form', function() {
 
         element(by.id('new-user-default-credits')).sendKeys('150');
 
-        element(by.id('single-credit-value')).clear();
-
-        element(by.id('single-credit-value')).sendKeys('4');
-
         element(by.id('submit')).click();
         browser.sleep( 2000 );
 
         expect(element(by.css('label[for="new-user-default-credits"]')).isPresent()).toBe(false);
-
-        expect(element(by.css('label[for="single-credit-value"]')).isPresent()).toBe(false);
 
         expect(element(by.id('setting-error-settings_updated')).getText()).toMatch('Settings saved.');
 
@@ -257,8 +237,6 @@ describe('Hello World form', function() {
 
         expect(element(by.css('label[for="new-post-type-value-credit"]')).isPresent()).toBe(true);
 
-        element(by.id('single-credit-value')).clear();
-
         element(by.id('new-user-default-credits')).clear();
 
         element(by.id('submit')).click();
@@ -266,16 +244,11 @@ describe('Hello World form', function() {
 
         expect(element(by.css('label[for="new-user-default-credits"]')).isPresent()).toBe(true);
 
-        expect(element(by.css('label[for="single-credit-value"]')).isPresent()).toBe(true);
-
         element(by.id('add-post-type-value')).click();
 
         expect(element(by.css('label[for="new-post-type-value-name"]')).isPresent()).toBe(true);
 
-        expect(element(by.css('label[for="new-post-type-value-credit"]')).isPresent()).toBe(true);
-
     });
-
 
     it("administrator set user credits", function() {
 
@@ -460,11 +433,7 @@ describe('Hello World form', function() {
 
     });
 
-
 });
-
-
-
 
 function login_steps() {
     browser.get('/wp-login');

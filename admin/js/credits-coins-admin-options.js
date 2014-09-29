@@ -58,62 +58,6 @@ jQuery(function() {
         jQuery( '#post-types-values' ).val(new_settings);
     });
 
-    jQuery( 'ul.credits-by-group-list' ).on( 'click', 'li a.remove-credits-by-group-value', function() {
-        remove_data = jQuery( this).attr('href').slice(1);
-        old_settings = jQuery( '#credits-by-group-values').val();
-        old_settings = old_settings.split(';');
-        check_setting = jQuery.inArray(remove_data, old_settings);
-        if( check_setting >= 0 ){
-            old_settings.splice(check_setting, 1);
-            new_settings = old_settings.join(';');
-            jQuery( 'li.credits-by-group-item[data-value="'+remove_data+'"]' ).remove();
-            jQuery( '#credits-by-group-values' ).val(new_settings);
-            remove_data = remove_data.split(',');
-        }
-        if( jQuery( 'ul.credits-by-group-list li').length == 1 ){
-            jQuery( '#no-credits-by-group-values-message').removeClass( 'hidden' );
-        }
-    });
-
-    jQuery( '#add-credits-by-group-value' ).on( 'click', function() {
-
-        cc_set_validation_rules_credits_groups_values();
-        if( ! jQuery('form[action="options.php"]').valid() ) {
-            return;
-        }
-
-        credits_number = jQuery( "#new-credits-by-group-value" ).val();
-        credits_price = jQuery( "#new-credits-by-group-price" ).val();
-
-        if(credits_number == 0 || credits_price == 0)
-            return;
-
-        old_settings = jQuery( '#credits-by-group-values' ).val();
-        new_setting = credits_number + ',' + credits_price;
-        if(old_settings == ''){
-            old_settings = new Array();
-        }else{
-            old_settings = old_settings.split(';');
-        }
-        check_setting = old_settings.indexOf(new_setting);
-        if(check_setting < 0){
-
-            old_settings.push(new_setting);
-
-            new_setting_html = '<li '
-                + 'data-value="' + new_setting + '" class="credits-by-group-item">'
-                + credits_number + ' Credits =&gt; ' + credits_price + ' Euro - '
-                + '<a href="#' + new_setting + '" class="remove-credits-by-group-value">remove</a>'
-                + '</li>';
-            jQuery( 'ul.credits-by-group-list').append( new_setting_html );
-            if( jQuery( 'ul.credits-by-group-list li').length == 1 ){
-                jQuery( '#no-credits-by-group-values-message').removeClass( 'hidden' );
-            }
-        }
-        new_settings = old_settings.join(';');
-        jQuery( '#credits-by-group-values' ).val(new_settings);
-    });
-
     jQuery.validator.addMethod("valueNotEquals", function(value, element, arg){
         return arg != value;
     }, "Value must not equal arg.");
@@ -134,46 +78,15 @@ var cc_set_validation_rules_forms = function() {
                 required: true,
                 digits: true,
                 min: 1
-            },
-            "credits-coins-options[single-credit-value]": {
-                required: true,
-                digits: true,
-                min: 1
-            },
-            "credits-coins-options[single-credit-currency]":{
-                required: true
             }
         },
 
         messages: {
             "credits-coins-options[new-user-default-credits]": "Enter a number greater than 0",
-            "credits-coins-options[single-credit-value]": "Enter a number greater than 0",
-            "credits-coins-options[single-credit-currency]": "Select a currency",
         }
     });
 }
-var cc_set_validation_rules_credits_groups_values = function() {
-    jQuery('form[action="options.php"]').removeData('validator');
-    jQuery('form[action="options.php"]').validate({
-        rules: {
-            "new-credits-by-group-value": {
-                required: true,
-                digits: true,
-                min: 1
-            },
-            "new-credits-by-group-price":{
-                required: true,
-                digits: true,
-                min: 1
-            }
-        },
 
-        messages: {
-            "new-credits-by-group-value": "Enter a number greater than 0",
-            "new-credits-by-group-price": "Enter a number greater than 0",
-        }
-    });
-}
 var cc_set_validation_rules_post_types_values = function() {
     jQuery('form[action="options.php"]').removeData('validator');
     jQuery('form[action="options.php"]').validate({

@@ -6,8 +6,6 @@ wordpress plugin to enable users with a wallet of credits to be spent on acquiri
 Plugin still Work In Progress
 
 ==Steps to complete version 1.0==
-- make message to buy a post customizable by the user (option or file?)
-- remove cost configuration of Credits. it should be managed by some other plugin that associate a cost to each credit and group of credits
 - review template structure to commit all the necessary staff ... composer, grunt ecc
 - fix execution of protractor adding reset of DB schema with plugin data
 - how manage a build process??
@@ -23,6 +21,8 @@ step 1.0.1
 29/9ì09/2014
 - implemented phpunit for admin functions
 - implement code to install db structure during the plugin initialization
+- made buy button customizable by the user adding a file in the theme cc-buy-post.php
+- removed cost configuration for Credits. it should be managed by some other plugin that associate a cost to each credit and group of credits
 
 22/09/2014
 - reset data scripts ... delete all the data in the test DB beloging to the credits coins plugin

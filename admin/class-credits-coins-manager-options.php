@@ -91,30 +91,6 @@ class Credits_Coins_Manager_Options {
         );
 
         add_settings_field(
-            'single-credit-value',
-            'Single Credit Value',
-            array( $this, 'single_credit_value_callback' ),
-            'credits-coins-options',
-            'credits-coins-options'
-        );
-
-        add_settings_field(
-            'single-credit-currency',
-            __( 'Single Credit Currency', 'credits-coins' ),
-            array( $this, 'single_credit_currency_callback' ),
-            'credits-coins-options',
-            'credits-coins-options'
-        );
-
-        add_settings_field(
-            'credits-by-group-values',
-            __( 'Credits Groups Values', 'credits-coins' ),
-            array( $this, 'credits_by_group_values_callback' ),
-            'credits-coins-options',
-            'credits-coins-options'
-        );
-
-        add_settings_field(
             'post-types-values',
             __( 'Post Types with Credits', 'credits-coins' ),
             array( $this, 'post_types_values_callback' ),
@@ -137,8 +113,6 @@ class Credits_Coins_Manager_Options {
 
         $input['new-user-default-credits'] = intval( $input['new-user-default-credits'] );
 
-        $input['single-credit-currency'] = intval( $input['single-credit-currency'] );
-
         return $input;
     }
 
@@ -150,70 +124,6 @@ class Credits_Coins_Manager_Options {
             $value,
             $description
         );
-    }
-
-    public function single_credit_value_callback() {
-        $value = ( isset( $this->options['single-credit-value'] ) && ( is_numeric( $this->options['single-credit-value']) ) ) ? $this->options['single-credit-value'] : 0;
-        $description = '<p class="description">' . __('Value of each single credits. used when users need to buy credits', 'credits-coins') . '</p>';
-
-        printf( '<input size="3" type="text" id="single-credit-value" name="credits-coins-options[single-credit-value]" value="%s" autocomplete="off"/>', $value );
-
-        echo $description;
-    }
-
-    public function single_credit_currency_callback() {
-
-        $currencies = $this->get_currencies();
-
-        echo '<select id="single-credit-currency" name="credits-coins-options[single-credit-currency]" autocomplete="off">';
-
-        foreach( $currencies as $key => $value ){
-            $selected = '';
-            if( isset( $this->options['single-credit-currency'] ) && $this->options['single-credit-currency'] == $key ) {
-                $selected = 'selected="selected"';
-            }
-            $format = '<option value="%s" %s>%s</option>';
-            printf( $format, $key, $selected, $value );
-        }
-
-        echo '</selected>';
-
-    }
-
-    public function credits_by_group_values_callback() {
-
-        $value = ( isset( $this->options['credits-by-group-values'] ) ) ? $this->option_array_to_string( $this->options['credits-by-group-values'] ) : '';
-
-        $description = '<p class="description">' . __('Define how users can buy credits other than singly', 'credits-coins') . '</p>';
-
-        printf(
-            '<input type="hidden" id="credits-by-group-values" name="credits-coins-options[credits-by-group-values]" value="%s" autocomplete="off"/>',
-            $value
-        );
-
-        echo '<ul class="credits-by-group-list">';
-
-        $hide_message = ( count( $this->options['credits-by-group-values'] ) ) ? 'class="hidden"' : '';
-
-        echo '<li id="no-credits-by-group-values-message" ' . $hide_message . '>' . __( 'Up to know is not not defined any group of credits ', 'credits-coin' ) . '</li>';
-
-        if( count( $this->options['credits-by-group-values'] ) ) {
-            foreach( $this->options['credits-by-group-values'] as $key => $value ) {
-                //$option_saved = explode( ',', $option_saved );
-                echo '<li class="credits-by-group-item" data-value="' . $key . ',' . $value . '">' . $key . ' ' . __( 'Credits', 'credits-coins' ) .  ' => ' . $value . ' ' . __( 'Euro', 'credits-coins' ) . ' - <a class="remove-credits-by-group-value" href="#' . $key . ',' . $value . '">remove</a></li>';
-            }
-        }
-
-        echo '</ul>';
-
-        echo __( 'Number of Credits', 'credits-coins' ) . ' <input type="text" id="new-credits-by-group-value" name="new-credits-by-group-value" value="0" size="3" autocomplete="off" />';
-
-        echo __( 'Price', 'credits-coins' ) . '<input type="text" id="new-credits-by-group-price" name="new-credits-by-group-price" value="0" size="3" autocomplete="off" />';
-
-        echo ' <input id="add-credits-by-group-value" type="button" class="button button-primary" value="Add" />';
-
-        echo $description;
-
     }
 
     public function post_types_values_callback() {
@@ -266,10 +176,6 @@ class Credits_Coins_Manager_Options {
 
     }
 
-
-
-
-
     function get_linking_post_types() {
         $linking_elements = get_post_types();
         unset($linking_elements['attachment']);
@@ -278,10 +184,6 @@ class Credits_Coins_Manager_Options {
         return $linking_elements;
     }
 
-
-    function get_currencies() {
-        return array( 'Eur' => __( 'Euro', 'credits-coins' ), 'USDollar' => __( 'US Dollar', 'credits-coins' ) );
-    }
 
     /*
          * this function is ugly. now it is here
