@@ -24,6 +24,63 @@ class Credits_Coins_Manager_Admin {
         }
     }
 
+    public function init_db_schema()
+    {
+        global $wpdb;
+        global $credits_coins_db_version;
+
+        $table_name = $wpdb->prefix . 'liveshoutbox';
+
+        $charset_collate = '';
+
+        if (!empty($wpdb->charset)) {
+            $charset_collate = "DEFAULT CHARACTER SET {$wpdb->charset}";
+        }
+
+        if (!empty($wpdb->collate)) {
+            $charset_collate .= " COLLATE {$wpdb->collate}";
+        }
+
+        require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+
+        $table_name = $wpdb->prefix . 'credits_coins_movements';
+
+        $sql = "CREATE TABLE IF NOT EXISTS " . $table_name . " (
+                  id bigint(20) NOT NULL AUTO_INCREMENT,
+                  maker_user_id bigint(20) NOT NULL,
+                  destination_user_id bigint(20) NOT NULL,
+                  time datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+                  value int(11) NOT NULL DEFAULT '0',
+                  tools varchar(10) NOT NULL DEFAULT '',
+                  description longtext NOT NULL,
+                  UNIQUE KEY id (id),
+                  KEY maker_user_id (maker_user_id),
+                  KEY destination_user_id (destination_user_id)
+                ) $charset_collate;";
+
+        dbDelta($sql);
+
+        $table_name = $wpdb->prefix . 'credits_coins_purchases';
+
+        $sql = "CREATE TABLE IF NOT EXISTS " . $table_name . " (
+                  id bigint(20) NOT NULL AUTO_INCREMENT,
+                  user_id bigint(20) NOT NULL,
+                  post_id bigint(20) NOT NULL,
+                  time datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+                  value int(11) NOT NULL DEFAULT '0',
+                  note longtext NOT NULL,
+                  UNIQUE KEY id (id),
+                  UNIQUE KEY unique_purchase (user_id,post_id),
+                  KEY user_id (user_id),
+                  KEY post_id (post_id)
+                ) $charset_collate;";
+
+        dbDelta($sql);
+
+        add_option('credits_coins_db_version', $credits_coins_db_version);
+
+    }
+
     public function register_scripts() {
         wp_register_script( 'credits-coins-admin-user-profile-js', plugins_url( $this->js_configuration['js_path'] . 'credits-coins-admin-user-profile.' . $this->js_configuration['js_extension'], __FILE__ ) );
     }
@@ -226,30 +283,30 @@ class Credits_Coins_Manager_Admin {
 
     }
     /*
-     * CREATE TABLE IF NOT EXISTS `wp_credits_coins_movements` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `maker_user_id` bigint(20) NOT NULL,
-  `destination_user_id` bigint(20) NOT NULL,
-  `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `value` int(11) NOT NULL DEFAULT '0',
-  `tools` varchar(10) NOT NULL DEFAULT '',
-  `description` longtext NOT NULL,
-  UNIQUE KEY `id` (`id`),
-  KEY `maker_user_id` (`maker_user_id`),
-  KEY `destination_user_id` (`destination_user_id`)
+     * CREATE TABLE IF NOT EXISTS wp_credits_coins_movements (
+  id bigint(20) NOT NULL AUTO_INCREMENT,
+  maker_user_id bigint(20) NOT NULL,
+  destination_user_id bigint(20) NOT NULL,
+  time datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  value int(11) NOT NULL DEFAULT '0',
+  tools varchar(10) NOT NULL DEFAULT '',
+  description longtext NOT NULL,
+  UNIQUE KEY id (id),
+  KEY maker_user_id (maker_user_id),
+  KEY destination_user_id (destination_user_id)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
-CREATE TABLE IF NOT EXISTS `wp_credits_coins_purchases` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `user_id` bigint(20) NOT NULL,
-  `post_id` bigint(20) NOT NULL,
-  `time` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `value` int(11) NOT NULL DEFAULT '0',
-  `note` longtext NOT NULL,
-  UNIQUE KEY `id` (`id`),
-  UNIQUE KEY `unique_purchase` (`user_id`,`post_id`),
-  KEY `user_id` (`user_id`),
-  KEY `post_id` (`post_id`)
+CREATE TABLE IF NOT EXISTS wp_credits_coins_purchases (
+  id bigint(20) NOT NULL AUTO_INCREMENT,
+  user_id bigint(20) NOT NULL,
+  post_id bigint(20) NOT NULL,
+  time datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  value int(11) NOT NULL DEFAULT '0',
+  note longtext NOT NULL,
+  UNIQUE KEY id (id),
+  UNIQUE KEY unique_purchase (user_id,post_id),
+  KEY user_id (user_id),
+  KEY post_id (post_id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
      */

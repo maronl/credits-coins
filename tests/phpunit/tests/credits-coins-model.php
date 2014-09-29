@@ -14,6 +14,11 @@ class Tests_Secure_Attachments extends WP_UnitTestCase
         );
 
         add_option('credits-coins-options', $creditsCoinsOptions);
+
+        // force DB schema creation - tobedone in a smarter way
+        $data_model = credits_coins_model::getinstance();
+        $admin = new Credits_Coins_Manager_Admin( '1.0.0', $creditsCoinsOptions, $data_model );
+        $admin->init_db_schema();
     }
 
     function tearDown()

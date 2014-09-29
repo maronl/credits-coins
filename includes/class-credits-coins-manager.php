@@ -82,12 +82,11 @@ class Credits_Coins_Manager {
         }
 
         $this->load_dependencies();
+        $this->define_register_activation_hook();
         $this->define_admin_hooks();
         $this->define_public_hooks();
 
     }
-
-
 
     /**
      * Imports the Classes needed to make the plugin working.
@@ -114,6 +113,17 @@ class Credits_Coins_Manager {
         require_once plugin_dir_path( __FILE__ ) . 'class-credits-coins-loader.php';
         $this->loader = new Credits_Coins_Loader();
 
+    }
+
+
+    /**
+     * Defines the hooks and callback functions that are used for setting up the plugin during the activation phase. DB schema for example  .
+     *
+     * @access private
+     */
+    private function define_register_activation_hook() {
+        $admin = new Credits_Coins_Manager_Admin( $this->version, $this->options, Credits_Coins_Model::getInstance());
+        register_activation_hook( dirname( dirname( __FILE__ ) ) . '\credits-coins.php' , array( $admin, 'init_db_schema' ) );
     }
 
     /**
