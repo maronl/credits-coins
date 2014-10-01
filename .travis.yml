@@ -57,8 +57,9 @@ before_script:
     - cd ..
     - mv $plugin_slug $plugin_dir
     - cd $plugin_dir
+    - cd tests
 
-script: phpunit --configuration tests/phpunit.xml.dist
+script: phpunit
 
 notifications:
   email:
