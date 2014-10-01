@@ -26,11 +26,40 @@ env:
 
 matrix:
   include:
+    - php: "5.4"
+      env: WP_VERSION=master
     - php: "5.3"
+      env: WP_VERSION=master
+    - php: "5.5"
       env: WP_VERSION=master
     - php: "5.4"
       env: WP_VERSION=3.8
-    - php: "5.2"
+    - php: "5.3"
       env: WP_VERSION=3.8
 
+# Grab the setup script and execute
+before_script:
+    - mkdir -p tmp
+    - WP_CORE_DIR=tmp/wordpress/
+    - WP_TESTS_DIR=tmp/wordpress-tests/
+    - wget -nv -O tmp/wordpress.tar.gz https://github.com/WordPress/WordPress/tarball/$WP_VERSION
+    - mkdir -p $WP_CORE_DIR
+    - tar --strip-components=1 -zxmf tmp/wordpress.tar.gz -C $WP_CORE_DIR
+    - svn co --ignore-externals http://unit-tests.svn.wordpress.org/trunk/ tmp/wordpress-tests/
+    - cp tmp/wordpress-tests/wp-tests-config-sample.php tmp/wordpress-tests/wp-tests-config.php
+    - sed -i "s:dirname( __FILE__ ) . '/wordpress/':'$WP_CORE_DIR':" tmp/wordpress-tests/wp-tests-config.php
+    - sed -i "s/yourdbnamehere/wordpress_test/" tmp/wordpress-tests/wp-tests-config.php
+    - sed -i "s/yourusernamehere/root/" tmp/wordpress-tests/wp-tests-config.php
+    - sed -i "s/yourpasswordhere//" tmp/wordpress-tests/wp-tests-config.php
+    - mysql -e 'CREATE DATABASE wordpress_test;' -uroot
+    - plugin_slug=$(basename $(pwd))
+    - plugin_dir=$WP_CORE_DIR/wp-content/plugins/$plugin_slug
+    - cd ..
+    - mv $plugin_slug $plugin_dir
+    - cd $plugin_dir/tests
+
 script: phpunit --configuration tests/phpunit.xml.dist
+
+notifications:
+  email:
+    - lcmaroni77@gmail.com

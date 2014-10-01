@@ -1,5 +1,5 @@
 <phpunit
-	bootstrap="../../../../../tests/wp-tests/tests/phpunit/includes/bootstrap.php"
+	bootstrap="phpunit/bootstrap.php"
         backupGlobals="false"
         colors="true"
         >

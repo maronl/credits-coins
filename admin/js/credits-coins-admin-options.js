@@ -104,7 +104,8 @@ var cc_set_validation_rules_post_types_values = function() {
 
         messages: {
             "new-post-type-value-name": "Select a post type",
-            "new-post-type-value-credit": "Enter a number greater than 0",
+            "new-post-type-value-credit": "Enter a number greater than 0"
         }
     });
+
 }

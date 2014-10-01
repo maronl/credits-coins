@@ -6,7 +6,7 @@ wordpress plugin to enable users with a wallet of credits to be spent on acquiri
 Plugin still Work In Progress
 
 ==Steps to complete version 1.0==
-- review template structure to commit all the necessary staff ... composer, grunt ecc
+- fix path to boostrap.php using phpunit (dev e travis?)
 - fix execution of protractor adding reset of DB schema with plugin data
 - how manage a build process??
 
@@ -14,7 +14,7 @@ step 1.0.1
 - implement plugin credits-coins-recharge allow user to buy credits. actually create a bridge with paypal payments. make it extendible with other methods of payment
 - selenium server used during test how is installed? composer? in git?
 - manage update DB schema for plugin updates
-
+- create a package with composer for dependencies ?
 
 == Hard Working on :) ==
 
@@ -23,6 +23,7 @@ step 1.0.1
 - implement code to install db structure during the plugin initialization
 - made buy button customizable by the user adding a file in the theme cc-buy-post.php
 - removed cost configuration for Credits. it should be managed by some other plugin that associate a cost to each credit and group of credits
+- reviewed template structure to commit all the necessary staff ... composer, grunt ecc
 
 22/09/2014
 - reset data scripts ... delete all the data in the test DB beloging to the credits coins plugin

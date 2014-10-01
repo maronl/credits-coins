@@ -239,8 +239,7 @@ class Credits_Coins_Manager_Admin {
             return false;
         }
     }
-
-
+    
     function add_meta_box_credits_coins() {
 
         global $post_type;
