@@ -15,7 +15,7 @@ $GLOBALS['wp_tests_options'] = array(
 // WordPress develop SVN checkout.
 //if(! defined( 'WP_DEVELOP_DIR' ) )  {
     //require 'C:/xampp/htdocs/wp-plugin-dev/wordpress' . '/../tests/wp-tests/tests/phpunit/includes/bootstrap.php';
-    require '/tmp/wordpress-tests/includes/bootstrap.php';
+    require '/tmp/wordpress-tests/tests/phpunit/includes/bootstrap.php';
 //} else {
 //    require '../../../../tests/phpunit/includes/bootstrap.php';
 //}
