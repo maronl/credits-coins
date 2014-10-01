@@ -46,7 +46,7 @@ class Tests_Secure_Attachments extends WP_UnitTestCase
         $user_id = 1;
         $this->assertequals(false, $data_model->set_user_credits($user_id));
         $this->assertequals(true, $data_model->set_user_credits($user_id, 100));
-        $this->assertequals(100, $data_model->get_user_credits($user_id));
+        $this->assertequals(110, $data_model->get_user_credits($user_id));
 
     }
 
