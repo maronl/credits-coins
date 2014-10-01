@@ -16,7 +16,7 @@ class Tests_Secure_Attachments extends WP_UnitTestCase
         add_option('credits-coins-options', $creditsCoinsOptions);
 
         // force DB schema creation - tobedone in a smarter way
-        $data_model = credits_coins_model::getinstance();
+        $data_model = Credits_Coins_Model::getinstance();
         $admin = new Credits_Coins_Manager_Admin( '1.0.0', $creditsCoinsOptions, $data_model );
         $admin->init_db_schema();
     }
@@ -39,7 +39,7 @@ class Tests_Secure_Attachments extends WP_UnitTestCase
 
     function test_method_set_credit_user()
     {
-        $data_model = credits_coins_model::getinstance();
+        $data_model = Credits_Coins_Model::getinstance();
         $this->assertequals(false, $data_model->set_user_credits());
         $user_id = 9999999999999;
         $this->assertequals(false, $data_model->set_user_credits($user_id, 22));
@@ -52,7 +52,7 @@ class Tests_Secure_Attachments extends WP_UnitTestCase
 
     function test_method_set_post_credits()
     {
-        $data_model = credits_coins_model::getinstance();
+        $data_model = Credits_Coins_Model::getinstance();
         $this->assertequals(false, $data_model->set_post_credits());
         $post_id = 9999999999999;
         $this->assertequals(false, $data_model->set_post_credits($post_id, 10));
@@ -66,7 +66,7 @@ class Tests_Secure_Attachments extends WP_UnitTestCase
 
     function test_method_register_credits_movement()
     {
-        $data_model = credits_coins_model::getinstance();
+        $data_model = Credits_Coins_Model::getinstance();
         $user_id = 1;
 
         $args = array(
@@ -84,7 +84,7 @@ class Tests_Secure_Attachments extends WP_UnitTestCase
 
     function test_method_get_user_credits_movements()
     {
-        $data_model = credits_coins_model::getinstance();
+        $data_model = Credits_Coins_Model::getinstance();
         $user_id = 1;
         $this->assertCount(0, $data_model->get_user_credits_movements($user_id));
 
@@ -92,7 +92,7 @@ class Tests_Secure_Attachments extends WP_UnitTestCase
 
     function test_method_register_user_purchase()
     {
-        $data_model = credits_coins_model::getinstance();
+        $data_model = Credits_Coins_Model::getinstance();
         $user_id = 1;
         $post_id = 1;
         $post_value = 10;
@@ -108,7 +108,7 @@ class Tests_Secure_Attachments extends WP_UnitTestCase
 
     function test_method_user_can_access_post()
     {
-        $data_model = credits_coins_model::getinstance();
+        $data_model = Credits_Coins_Model::getinstance();
         $user_id = 1;
         $post_id = 1;
         $post_value = 10;
