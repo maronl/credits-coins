@@ -53,7 +53,7 @@ before_script:
     - sed -i "s/yourpasswordhere//" /tmp/wordpress-tests/wp-tests-config.php
     - mysql -e 'CREATE DATABASE wordpress_test;' -uroot
     - plugin_slug=$(basename $(pwd))
-    - plugin_dir=$WP_CORE_DIRwp-content/plugins/$plugin_slug
+    - plugin_dir=$WP_CORE_DIR/wp-content/plugins/$plugin_slug
     - cd ..
     - mv $plugin_slug $plugin_dir
     - cd $plugin_dir
