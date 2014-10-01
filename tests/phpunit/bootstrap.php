@@ -14,7 +14,8 @@ $GLOBALS['wp_tests_options'] = array(
 // location. Otherwise, we'll just assume that this plugin is installed in a
 // WordPress develop SVN checkout.
 //if(! defined( 'WP_DEVELOP_DIR' ) )  {
-    require 'C:/xampp/htdocs/wp-plugin-dev/wordpress' . '/../tests/wp-tests/tests/phpunit/includes/bootstrap.php';
+    //require 'C:/xampp/htdocs/wp-plugin-dev/wordpress' . '/../tests/wp-tests/tests/phpunit/includes/bootstrap.php';
+    require '/tmp/wordpress-tests/includes/bootstrap.php';
 //} else {
 //    require '../../../../tests/phpunit/includes/bootstrap.php';
 //}
