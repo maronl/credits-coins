@@ -104,13 +104,13 @@ class Credits_Coins_Manager {
      * @access private
      */
     private function load_dependencies() {
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-credits-coins-model.php';
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-credits-coins-manager-admin.php';
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'admin/class-credits-coins-manager-options.php';
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-credits-coins-manager-public.php';
-        require_once plugin_dir_path( dirname( __FILE__ ) ) . 'includes/class-credits-coins-theme-functions.php';
+        require_once dirname( dirname( __FILE__ ) ) . '/includes/class-credits-coins-model.php';
+        require_once dirname( dirname( __FILE__ ) ) . '/admin/class-credits-coins-manager-admin.php';
+        require_once dirname( dirname( __FILE__ ) ) . '/admin/class-credits-coins-manager-options.php';
+        require_once dirname( dirname( __FILE__ ) ) . '/public/class-credits-coins-manager-public.php';
+        require_once dirname( dirname( __FILE__ ) ) . '/includes/class-credits-coins-theme-functions.php';
 
-        require_once plugin_dir_path( __FILE__ ) . 'class-credits-coins-loader.php';
+        require_once dirname( __FILE__ ) . '/class-credits-coins-loader.php';
         $this->loader = new Credits_Coins_Loader();
 
     }
