@@ -6,7 +6,6 @@ wordpress plugin to enable users with a wallet of credits to be spent on acquiri
 Plugin still Work In Progress
 
 ==Steps to complete version 1.0==
-- fix path to boostrap.php using phpunit (dev e travis?)
 - fix execution of protractor adding reset of DB schema with plugin data
 - how manage a build process??
 
@@ -17,6 +16,9 @@ step 1.0.1
 - create a package with composer for dependencies ?
 
 == Hard Working on :) ==
+
+03/10/2014
+- fix path to boostrap.php using phpunit (dev e travis?)
 
 29/9ì09/2014
 - implemented phpunit for admin functions

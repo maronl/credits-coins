@@ -6,20 +6,21 @@
 *
 * @package wordpress-plugin-tests
 */
+
 // Activates this plugin in WordPress so it can be tested.
 $GLOBALS['wp_tests_options'] = array(
 'active_plugins' => array( 'credits-coins/credits-coins.php' ),
 );
 
+// load bootstra file
+if ( getenv( 'TRAVIS' ) ) {
+    require '/tmp/wordpress-tests/tests/phpunit/includes/bootstrap.php';
+}else{
+    require '../../../../../wp-tests/tests/phpunit/includes/bootstrap.php';
+}
 
-// If the develop repo location is defined (as WP_DEVELOP_DIR), use that
-// location. Otherwise, we'll just assume that this plugin is installed in a
-// WordPress develop SVN checkout.
-//if(! defined( 'WP_DEVELOP_DIR' ) )  {
-//require 'C:/xampp/htdocs/wp-plugin-dev/wp-tests/tests/phpunit/includes/bootstrap.php';
-require '/tmp/wordpress-tests/tests/phpunit/includes/bootstrap.php';
-//} else {
-//    require '../../../../tests/phpunit/includes/bootstrap.php';
-//}
-//just trying to add it manually
-require '/tmp/wordpress/wp-content/plugins/credits-coins/credits-coins.php';
+//just trying to add it manually in travis-ci but i think it is not the perfect way
+// to load a plugin in this way just after the loading of all WordPress framework
+if ( getenv( 'TRAVIS' ) ) {
+    require '/tmp/wordpress/wp-content/plugins/credits-coins/credits-coins.php';
+}
