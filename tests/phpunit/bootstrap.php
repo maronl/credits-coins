@@ -21,3 +21,5 @@ require '/tmp/wordpress-tests/tests/phpunit/includes/bootstrap.php';
 //} else {
 //    require '../../../../tests/phpunit/includes/bootstrap.php';
 //}
+//just trying to add it manually
+require '/tmp/wordpress/wp-content/plugins/credits-coins/credits-coins.php';
