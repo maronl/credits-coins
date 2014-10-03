@@ -1,4 +1,6 @@
 <?php
+echo "load Credits_Coins_Model";
+
 class Credits_Coins_Model {
 
     private static $_instance = null;

@@ -30,6 +30,8 @@ if (!defined('WPINC')) {
  */
 require_once plugin_dir_path(__FILE__) . 'includes/class-credits-coins-manager.php';
 
+echo "load plugin";
+
 /**
  * Instantiates the Credits Coins Manager class and then
  * calls its run method officially starting up the plugin.
