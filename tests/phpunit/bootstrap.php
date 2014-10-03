@@ -7,6 +7,7 @@
  * @package wordpress-plugin-tests
  */
 // Activates this plugin in WordPress so it can be tested.
+echo "load bootstrap phpunit";
 $GLOBALS['wp_tests_options'] = array(
     'active_plugins' => array( 'credits-coins/credits-coins.php' ),
 );
