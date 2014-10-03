@@ -56,7 +56,6 @@ before_script:
     - plugin_dir=$WP_CORE_DIR/wp-content/plugins/$plugin_slug
     - cd ..
     - mv $plugin_slug $plugin_dir
-    - mv -f $plugin_dir/tests/phpunit/bootstrap_wp_tests.php /tmp/wordpress-tests/tests/phpunit/includes/bootstrap.php
     - cd $plugin_dir
     - cd tests
 
