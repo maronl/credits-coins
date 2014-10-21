@@ -27,7 +27,6 @@ class Credits_Coins_Manager_Admin {
     public function init_db_schema()
     {
         global $wpdb;
-        global $credits_coins_db_version;
 
         $table_name = $wpdb->prefix . 'liveshoutbox';
 
@@ -77,7 +76,7 @@ class Credits_Coins_Manager_Admin {
 
         dbDelta($sql);
 
-        add_option('credits_coins_db_version', $credits_coins_db_version);
+        add_option('credits_coins_db_version', $this->version);
 
     }
 
