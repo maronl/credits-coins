@@ -158,6 +158,10 @@ class Credits_Coins_Model {
         if( is_null( $user_id ) || is_null( $post_id ) ) {
             return false;
         }
+        // administrator and editor can access everything
+        if(current_user_can('edit_others_posts') || current_user_can('manage_options')){
+            return true;
+        }
         $check = $wpdb->get_row(
             $wpdb->prepare(
                 "
