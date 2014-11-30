@@ -174,7 +174,8 @@ class Credits_Coins_Model {
         );
 
         if( is_null( $check ) ){
-            $check = apply_filters( 'credit_coins_user_can_access_post', $user_id, $post_id );
+            if(has_filter('credit_coins_user_can_access_post'))
+                $check = apply_filters( 'credit_coins_user_can_access_post', $user_id, $post_id );
             if( is_null( $check ) ){
                 return false;
             }
