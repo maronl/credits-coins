@@ -26,7 +26,11 @@ class Credits_Coins_Model {
     }
 
     public function get_user_credits ( $user_id ) {
-       return get_user_meta( $user_id, 'credits-coins-user-credits', true );
+        $user_credits = get_user_meta( $user_id, 'credits-coins-user-credits', true );
+        if( empty( $user_credits ) ){
+            $user_credits = 0;
+        }
+        return $user_credits;
     }
 
     public function set_post_credits ( $post_id = null, $value = null ) {
@@ -42,7 +46,11 @@ class Credits_Coins_Model {
     }
 
     public function get_post_credits ( $post_id ) {
-        return get_post_meta( $post_id, 'credits-coins-post-value', true );
+        $post_credits = get_post_meta( $post_id, 'credits-coins-post-value', true );
+        if( empty( $post_credits ) ){
+            $post_credits = 0;
+        }
+        return $post_credits;
     }
 
     public function register_credits_movement( $args = array() ){

@@ -226,7 +226,7 @@ class Credits_Coins_Manager_Admin {
         $this->data_model->register_credits_movement( $args );
         die( json_encode( array(
             'status' => 1,
-            'msg' => __('Good! Your order has been completed successfully. you will redirected to the post page with the entire content in a few seconds.', 'credits-coins')
+                'msg' => __('Good! Your order has been completed successfully. you will redirected to the post page with the entire content in a few seconds.', 'credits-coins')
         ) ) );
 
     }
