@@ -20,5 +20,19 @@ class Credits_Coins_Theme_Functions {
             }
         }
 
+        if( ! function_exists( 'cc_get_post_credits' ) ) {
+            function cc_get_post_credits( $post_id = null ) {
+                $cc_data_model = Credits_Coins_Model::getInstance();
+                return $cc_data_model->get_post_credits( $post_id );
+            }
+        }
+
+        if( ! function_exists( 'cc_get_user_credits' ) ) {
+            function cc_get_user_credits( $user_id = null ) {
+                $cc_data_model = Credits_Coins_Model::getInstance();
+                return $cc_data_model->get_user_credits( $user_id );
+            }
+        }
+
     }
 } 
