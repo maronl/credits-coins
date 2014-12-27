@@ -110,9 +110,10 @@ class Tests_Secure_Attachments extends WP_UnitTestCase
     {
         $data_model = Credits_Coins_Model::getinstance();
         $user_id = 1;
-        $post_id = 1;
+        $post_id = $this->factory->post->create();
         $post_value = 10;
         $purchase_note = 'phpunit testing purchase';
+        $data_model->set_post_credits($post_id, $post_value);
         $this->assertEquals( false, $data_model->user_can_access_post( $user_id, $post_id ) );
         $this->assertEquals( 1, $data_model->register_user_purchase( $user_id, $post_id, $post_value, $purchase_note ) );
         $number_informaton_purchase = 6;
