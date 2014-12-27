@@ -170,6 +170,11 @@ class Credits_Coins_Model {
         if(current_user_can('edit_others_posts') || current_user_can('manage_options')){
             return true;
         }
+        // check if post credits is 0
+        if( $this->get_post_credits( $post_id ) <= 0){
+            return true;
+        }
+
         $check = $wpdb->get_row(
             $wpdb->prepare(
                 "
