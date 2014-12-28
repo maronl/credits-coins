@@ -113,17 +113,17 @@ class Credits_Coins_Manager_Admin {
     function show_extra_profile_fields( $user ) {
         $nonce = wp_create_nonce( 'credits-coins-movements' );?>
 
-        <h3>Crediti utente</h3>
+        <h3><?php _e('User Credits', 'credits-coins'); ?></h3>
 
         <table class="form-table">
 
             <tr>
-                <th><label for="credits-coins-user-credits">Credito</label></th>
+                <th><label for="credits-coins-user-credits"><?php _e('Credits', 'credits-coins'); ?></label></th>
 
                 <td>
                     <input type="text" name="credits-coins-user-credits" id="credits-coins-user-credits" value="<?php echo esc_attr( get_user_meta( $user->ID, 'credits-coins-user-credits',true) ); ?>" class="regular-text" />
-                    <a id="btn-visualizza-movimenti" href="<?php echo $user->ID ?>" class="button">Visualizza ultimi 15 movimenti</a>
-                        <a id="btn-scarica-movimenti" href="<?php echo plugin_dir_url( __FILE__  ) . "export-credits-movements.php?_wpnonce=" . $nonce . "&user_id=" . $user->ID; ?>">Scarica tutti i movimenti in formato .cvs</a> <br />
+                    <a id="btn-visualizza-movimenti" href="<?php echo $user->ID ?>" class="button"><?php _e('Show latest 15 credits movements', 'credits-coins'); ?></a>
+                        <a id="btn-scarica-movimenti" href="<?php echo plugin_dir_url( __FILE__  ) . "export-credits-movements.php?_wpnonce=" . $nonce . "&user_id=" . $user->ID; ?>"><?php _e('Download all the credits movements as .csv', 'credits-coins'); ?></a> <br />
                     <span class="description">Crediti disponibili dell'utente. modificare con cura :)</span>
                 </td>
             </tr>
@@ -280,6 +280,11 @@ class Credits_Coins_Manager_Admin {
         $this->data_model->set_post_credits( $post_id, $new_value );
 
     }
+
+    function load_textdomain() {
+        load_plugin_textdomain( 'credits-coins', false, dirname( dirname( plugin_basename( __FILE__ ) ) )  . '/langs/' );
+    }
+
     /*
      * CREATE TABLE IF NOT EXISTS wp_credits_coins_movements (
   id bigint(20) NOT NULL AUTO_INCREMENT,

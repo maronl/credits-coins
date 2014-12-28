@@ -141,6 +141,7 @@ class Credits_Coins_Manager {
         $this->loader->add_action( 'admin_enqueue_scripts', $admin_options, 'enqueue_scripts' );
         $this->loader->add_action( 'admin_init', $admin_options, 'register_styles' );
         $this->loader->add_action( 'admin_enqueue_scripts', $admin_options, 'enqueue_styles' );
+        $this->loader->add_action( 'init', $admin, 'load_textdomain' );
 
         $this->loader->add_action( 'admin_init', $admin, 'register_scripts' );
         $this->loader->add_action( 'admin_enqueue_scripts', $admin, 'enqueue_scripts' );

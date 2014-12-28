@@ -77,14 +77,14 @@ class Credits_Coins_Manager_Options {
 
         add_settings_section(
             'credits-coins-options', // ID
-            'Credits Coins Options', // Title
+            __( 'Credits Coins Options', 'credits-coins' ), // Title
             array( $this, 'print_section_info' ), // Callback
             'credits-coins-options' // Page
         );
 
         add_settings_field(
             'new-user-default-credits', // ID
-            'Default Credits for a new user', // Title
+            __( 'Default Credits for a new user', 'credits-coins' ), // Title
             array( $this, 'new_user_default_credits_callback' ), // Callback
             'credits-coins-options', // Page
             'credits-coins-options' // Section
@@ -170,7 +170,7 @@ class Credits_Coins_Manager_Options {
 
         echo __( 'Default Credits', 'credits-coins' ) . ' <input type="text" id="new-post-type-value-credit" name="new-post-type-value-credit" value="0" size="3" autocomplete="off" />';
 
-        echo ' <input id="add-post-type-value" type="button" class="button button-primary" value="Add" />';
+        echo ' <input id="add-post-type-value" type="button" class="button button-primary" value="' . __('Add', 'credits-coins') . '" />';
 
         echo $description;
 

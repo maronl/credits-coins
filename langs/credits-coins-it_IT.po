@@ -1,0 +1,117 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: credits coins\n"
+"POT-Creation-Date: 2014-12-28 00:57+0100\n"
+"PO-Revision-Date: 2014-12-28 00:58+0100\n"
+"Last-Translator: Luca Maroni <lcmaroni77@gmail.com>\n"
+"Language-Team: Luca Maroni <lcmaroni77@gmail.com>\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.10\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __;_e\n"
+"X-Poedit-SearchPath-0: ..\\admin\n"
+"X-Poedit-SearchPath-1: ..\\includes\n"
+"X-Poedit-SearchPath-2: ..\\public\n"
+
+#: ..\admin/class-credits-coins-manager-admin.php:116
+msgid "User Credits"
+msgstr "Crediti Utente"
+
+#: ..\admin/class-credits-coins-manager-admin.php:121
+#: ..\admin/class-credits-coins-manager-admin.php:248
+#: ..\admin/class-credits-coins-manager-options.php:150
+msgid "Credits"
+msgstr "Crediti"
+
+#: ..\admin/class-credits-coins-manager-admin.php:125
+msgid "Show latest 15 credits movements"
+msgstr "Mostra gli ultimi 15 movimenti"
+
+#: ..\admin/class-credits-coins-manager-admin.php:126
+msgid "Download all the credits movements as .csv"
+msgstr "Scarica tutti i movimenti in formato .csv"
+
+#: ..\admin/class-credits-coins-manager-admin.php:151
+msgid "defined new credits payoff using wp-admin"
+msgstr "Impostato nuovo saldo crediti usando wp-admin"
+
+#: ..\admin/class-credits-coins-manager-admin.php:194
+msgid "Ops ... To buy a post before do login. Thanks!"
+msgstr "Ops ... Per acquistare un post devi essere loggato. Grazie!"
+
+#: ..\admin/class-credits-coins-manager-admin.php:206
+msgid ""
+"It seems you don't have enough credits to buy this post. Please buy new "
+"credits to proceed with the order"
+msgstr ""
+"Sembra che non hai abbastanza crediti per acquistare il post. Ricarica i "
+"tuoi crediti per procedere con l'acquisto"
+
+#: ..\admin/class-credits-coins-manager-admin.php:221
+msgid "Ops ... it was not possible complete the order. Please try again!"
+msgstr "Ops ... non è stato possibile completare l'ordine. Riprova!"
+
+#: ..\admin/class-credits-coins-manager-admin.php:229
+msgid ""
+"Good! Your order has been completed successfully. you will redirected to the "
+"post page with the entire content in a few seconds."
+msgstr ""
+"Bene! il tuo ordine è stato completato con successo. A breve sarai inoltrato "
+"in automatico alla pagina con il contenuto del post acquistato."
+
+#: ..\admin/class-credits-coins-manager-admin.php:267
+msgid "Assign a value in Credits for this resource"
+msgstr "Assegna un valore in crediti per questa risorsa"
+
+#: ..\admin/class-credits-coins-manager-options.php:48
+msgid "Credits Coins"
+msgstr "Credits Coins"
+
+#: ..\admin/class-credits-coins-manager-options.php:59
+msgid "Credits Coins Plugin Options"
+msgstr "Credits Coins Opzioni del Plugin"
+
+#: ..\admin/class-credits-coins-manager-options.php:80
+msgid "Credits Coins Options"
+msgstr "Credits Coins - Opzioni"
+
+#: ..\admin/class-credits-coins-manager-options.php:87
+msgid "Default Credits for a new user"
+msgstr "Crediti di default per un nuovo utente"
+
+#: ..\admin/class-credits-coins-manager-options.php:95
+msgid "Post Types with Credits"
+msgstr "Tipologia di post con Crediti"
+
+#: ..\admin/class-credits-coins-manager-options.php:105
+msgid "Enter your settings below:"
+msgstr "imposta la tua configurazione di seguito:"
+
+#: ..\admin/class-credits-coins-manager-options.php:121
+msgid "default credits assigned to a new user after registration"
+msgstr "Numero di crediti assegnati ad un nuovo utente dopo la registrazione"
+
+#: ..\admin/class-credits-coins-manager-options.php:135
+msgid "Define which post types can be priced with credits"
+msgstr "Definisci che tipologia di post può essere acquistata con i crediti"
+
+#: ..\admin/class-credits-coins-manager-options.php:146
+msgid "No post type has been set to be valued with credits"
+msgstr "Nessuna tipologia di post può essere acquistata con i crediti"
+
+#: ..\admin/class-credits-coins-manager-options.php:158
+msgid "select a post type"
+msgstr "Seleziona la tipologia di post"
+
+#: ..\admin/class-credits-coins-manager-options.php:171
+msgid "Default Credits"
+msgstr "Crediti di default"
+
+#: ..\admin/class-credits-coins-manager-options.php:173
+msgid "Add"
+msgstr "Aggiungi"
