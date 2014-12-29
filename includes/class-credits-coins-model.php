@@ -143,22 +143,32 @@ class Credits_Coins_Model {
         return $rows_affected;
     }
 
-    function get_user_purchases( $user = null, $limit = 15, $offset = 0) {
+    function get_user_purchases( $user = null, $args = array()) {
         global $wpdb;
 
-        if( ! is_null( $user) ) {
-            $latest_movements = $wpdb->get_results(
-                "
-                SELECT *
-                FROM " . $wpdb->prefix . "credits_coins_purchases
-                WHERE user_id = " . $user . " ORDER BY id desc limit " . $offset . "," . $limit . "
-			    ", ARRAY_A
-            );
-
+        if( ! empty( $args ) ){
+            extract( $args );
         }
 
-        return $latest_movements;
+        if( is_null( $user) ){
+            return array();
+        }
 
+        $sql = "
+            SELECT *
+            FROM " . $wpdb->prefix . "credits_coins_purchases
+            WHERE user_id = " . $user . "
+            ";
+
+        $sql .= " ORDER BY " . $wpdb->posts . ".post_date desc ";
+
+        if( isset( $limit ) && $limit != -1 ){
+            $sql .= " limit " . $offset . "," . $limit;
+        }
+
+        $latest_movements = $wpdb->get_results( $sql, ARRAY_A );
+
+        return $latest_movements;
     }
 
     function user_can_access_post( $user_id = null, $post_id = null ){
