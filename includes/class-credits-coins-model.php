@@ -160,7 +160,7 @@ class Credits_Coins_Model {
             WHERE user_id = " . $user . "
             ";
 
-        $sql .= " ORDER BY " . $wpdb->posts . ".post_date desc ";
+        $sql .= " ORDER BY id desc ";
 
         if( isset( $limit ) && $limit != -1 ){
             $sql .= " limit " . $offset . "," . $limit;
