@@ -102,14 +102,13 @@ class Credits_Coins_Model {
         if( ! is_null( $user) ) {
             $latest_movements = $wpdb->get_results(
                 "
-                SELECT " . $wpdb->base_prefix . "credits_coins_movements.id, maker.user_login as maker_user, destination.user_login as destination_user, " . $wpdb->prefix . "credits_coins_movements.time, " . $wpdb->prefix . "credits_coins_movements.value, " . $wpdb->prefix . "credits_coins_movements.tools, " . $wpdb->prefix . "credits_coins_movements.description
+                SELECT " . $wpdb->base_prefix . "credits_coins_movements.id, maker.user_login as maker_user, destination.user_login as destination_user, " . $wpdb->base_prefix . "credits_coins_movements.time, " . $wpdb->base_prefix . "credits_coins_movements.value, " . $wpdb->base_prefix . "credits_coins_movements.tools, " . $wpdb->base_prefix . "credits_coins_movements.description
                 FROM " . $wpdb->base_prefix . "credits_coins_movements
                 left join " . $wpdb->users . " as maker on maker.id =  " . $wpdb->base_prefix . "credits_coins_movements.maker_user_id
                 left join " . $wpdb->users . " as destination on destination.id =  " . $wpdb->base_prefix . "credits_coins_movements.destination_user_id
                 WHERE destination_user_id = " . $user . " ORDER BY id desc limit " . $offset . "," . $limit . "
 			    ", ARRAY_A
             );
-
         }
 
         return $latest_movements;
