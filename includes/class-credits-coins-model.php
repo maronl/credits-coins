@@ -130,11 +130,12 @@ class Credits_Coins_Model {
 
         global $wpdb;
 
-        $table_name = $wpdb->prefix . "credits_coins_purchases";
+        $table_name = $wpdb->base_prefix . "credits_coins_purchases";
 
         $rows_affected = $wpdb->insert( $table_name, array(
                 'user_id' => $user_id,
                 'post_id' => $post_id,
+                'blog_id' => get_current_blog_id(),
                 'time' => current_time('mysql'),
                 'value' => $value,
                 'note' => $purchase_note)
@@ -156,9 +157,13 @@ class Credits_Coins_Model {
 
         $sql = "
             SELECT *
-            FROM " . $wpdb->prefix . "credits_coins_purchases
+            FROM " . $wpdb->base_prefix . "credits_coins_purchases
             WHERE user_id = " . $user . "
             ";
+
+        if( isset( $blog_id ) ){
+            $sql .= " AND blog_id = " . $blog_id;
+        }
 
         $sql .= " ORDER BY id desc ";
 
@@ -188,11 +193,12 @@ class Credits_Coins_Model {
         $check = $wpdb->get_row(
             $wpdb->prepare(
                 "
-                 SELECT * FROM " . $wpdb->prefix . "credits_coins_purchases
-                 WHERE post_id = %d
+                 SELECT * FROM " . $wpdb->base_prefix . "credits_coins_purchases
+                 WHERE blog_id = %d
+                 AND post_id = %d
                  AND user_id = %d
                 ",
-                $post_id, $user_id
+                get_current_blog_id(), $post_id, $user_id
             ), ARRAY_A
         );
 

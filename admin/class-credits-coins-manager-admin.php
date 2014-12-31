@@ -59,11 +59,12 @@ class Credits_Coins_Manager_Admin {
 
         dbDelta($sql);
 
-        $table_name = $wpdb->prefix . 'credits_coins_purchases';
+        $table_name = $wpdb->base_prefix . 'credits_coins_purchases';
 
         $sql = "CREATE TABLE IF NOT EXISTS " . $table_name . " (
                   id bigint(20) NOT NULL AUTO_INCREMENT,
                   user_id bigint(20) NOT NULL,
+                  blog_id bigint(20) NOT NULL,
                   post_id bigint(20) NOT NULL,
                   time datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
                   value int(11) NOT NULL DEFAULT '0',
