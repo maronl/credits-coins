@@ -42,7 +42,7 @@ class Credits_Coins_Manager_Admin {
 
         require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
 
-        $table_name = $wpdb->prefix . 'credits_coins_movements';
+        $table_name = $wpdb->base_prefix . 'credits_coins_movements';
 
         $sql = "CREATE TABLE IF NOT EXISTS " . $table_name . " (
                   id bigint(20) NOT NULL AUTO_INCREMENT,

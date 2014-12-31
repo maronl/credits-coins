@@ -56,7 +56,7 @@ if ( empty( $user_id ) ) {
 
 // OK proceed extracting data
 $sql = "
-    SELECT * FROM " . $wpdb->prefix . "credits_coins_movements as m
+    SELECT * FROM " . $wpdb->base_prefix . "credits_coins_movements as m
     WHERE m.destination_user_id = %d
     ";
 $users = $wpdb->get_results( $wpdb->prepare( $sql, $user_id ), ARRAY_A );
