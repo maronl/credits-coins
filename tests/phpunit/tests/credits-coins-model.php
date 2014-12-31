@@ -116,7 +116,7 @@ class Tests_Secure_Attachments extends WP_UnitTestCase
         $data_model->set_post_credits($post_id, $post_value);
         $this->assertEquals( false, $data_model->user_can_access_post( $user_id, $post_id ) );
         $this->assertEquals( 1, $data_model->register_user_purchase( $user_id, $post_id, $post_value, $purchase_note ) );
-        $number_informaton_purchase = 6;
+        $number_informaton_purchase = 7;
         $this->assertCount( $number_informaton_purchase, $data_model->user_can_access_post( $user_id, $post_id ) );
 
     }
